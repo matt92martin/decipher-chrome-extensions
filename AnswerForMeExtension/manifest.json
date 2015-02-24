@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "Answer For Me",
+  "description": "This extension provides an alternative to the ctrl+right answer for me option and other survey shortcuts",
+  "version": "1.2",
+
+  "icons": { 
+          "128": "Deciphericon.png" },
+  
+    "content_scripts": [
+    {
+      "matches": ["https://v2.decipherinc.com/survey/*","http://v2.decipherinc.com/survey/*"],      
+      "js": ["AnswerForMe.js"]
+    }
+  ],
+  
+  "permissions": [
+    "storage"
+  ]
+}
