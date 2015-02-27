@@ -4,7 +4,7 @@ Chrome extensions for Decipher survey programming/testing
 These Scripts allow keyboard shortcuts to be added to navigate around surveys using the chrome web browser.  They also add an alternative to the ctrl+right arrow shortcut in order to better answer questions.
 <br/>
 <br/>
-Instalation:<br/>
+Installation:<br/>
 https://chrome.google.com/webstore/detail/answer-for-me/jinpalfobalfahodbmaincnojkijcaic<br/>
 https://chrome.google.com/webstore/detail/decipher-keyboard-shortcu/kchoacpomoohipjomgadlhaejoekbofi 
 <br/>
