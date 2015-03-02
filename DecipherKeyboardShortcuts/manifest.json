@@ -5,13 +5,15 @@
   "description": "This extension provides keyboard shortcuts for navigating around surveys",
   "version": "1.2",
 
+
+  
   "icons": { 
           "128": "Deciphericon.png" },
   
     "content_scripts": [
     {
       "matches": ["https://v2.decipherinc.com/*","http://v2.decipherinc.com/*"],      
-      "js": ["Shortcuts.js"]
+      "js": ["Shortcuts.js","AnswerForMe.js"]
     }
   ],
   
