@@ -25,15 +25,98 @@ function addJQuery(callback) {
 addJQuery(main);
 
 
+
+
+
 // the guts of this userscript
 function main() {
-  
+    var tableCSS = {};
+    
+
 
 
     var url2 = window.location.href;
 
+    function injectJs(srcFile) {
+        var src = document.createElement('script');
+        src.textContent = srcFile;
+        document.body.appendChild(src);
+    }
+
+    var gotoquota = "function gotoquota(el){" +
+        "var eel = $(el);" +
+        "var eli = eel.attr('class');" +
+        "var elid = $('#'+eli);" +
+        "var elgo = eel.data('goto');" +
+        "var elgoto = document.getElementById(elgo);" +
+
+        "if (elid.is(':visible')){" +
+            "window.location.hash = '#'+elgo;" +
+        "}else{" +
+            "var _thisclick = elid.prev('h2').find('a').get(0);" +
+            "_thisclick.click();" +
+            "window.location.hash = '#'+elgo;" +
+        "}" +
+    "}";
+
+    //Some constructor here might be nice
+    function hideAll(){
+        var allDivs = $('div[id^="div"]'); 
+        allDivs.each(function(){
+            var _thisDiv = $(this);
+            if (_thisDiv.is(':visible')){
+                var thisclick = _thisDiv.prev('h2').find('a').get(0);
+                thisclick.click();
+            }
+        });
+    }
+
+    function showAll(){
+        var allDivs = $('div[id^="div"]'); 
+        allDivs.each(function(){
+            var _thisDiv = $(this);
+            if (_thisDiv.is(':hidden')){
+                var thisclick = _thisDiv.prev('h2').find('a').get(0);
+                thisclick.click();
+            }
+        });
+    }
 
     //start quota stuff
+    //quotaBuddy
+    if (url2.indexOf('tab=quota')!=-1){       
+        $('<div id="quotaBuddy"><div id="qbHead">Quota Buddy<span id="hideAll" class="clickable spQB">Hide</span><span id="showAll" class="clickable spQB">Show</span></div><div id="qbTable"><table></table></div></div>').insertAfter('#fwheader');
+        $('#hideAll').on('click', hideAll);
+        $('#showAll').on('click', showAll);
+        injectJs(gotoquota);
+
+        var qBuddy = $('div#quotaBuddy');
+        var qBuddyTdiv = $('#qbTable');
+        var qBuddyT = $('#qbTable table');
+        var qTables = $('table.nquota');
+
+        qBuddy.css({
+            'position': 'absolute',
+            'height': ($(window).height() - 33) + "px",
+            'width': "250px"
+        });
+        qBuddyTdiv.css({
+            'height': ($(window).height() - 58) + "px",
+        });
+
+        qTables.each(function(){
+            var _this = $(this);
+            var _thisid = $(this).get(0).id;
+            var _thisHidDiv = _this.parent('div').get(0).id;
+            var _thisText = _this.find('.nquotaDescription').text();
+
+            qBuddyT.append('<tr><td><a href=\"javascript:void(0)\" class=\"'+_thisHidDiv+'\" data-goto=\"'+_thisid+'\"onclick=\"gotoquota(this)\">'+_thisText+'</a></td></tr>');
+
+        });
+
+    }
+
+
 
     //cancel editing cell
     function escape()

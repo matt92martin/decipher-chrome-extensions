@@ -12,7 +12,7 @@
   
     "content_scripts": [
     {
-      "matches": ["https://v2.decipherinc.com/*","http://v2.decipherinc.com/*"],      
+      "matches": ["https://*.decipherinc.com/*","http://*.decipherinc.com/*"],      
       "js": ["Shortcuts.js","AnswerForMe.js"]
     }
   ],
