@@ -9,10 +9,13 @@
   
   "icons": { 
           "128": "Deciphericon.png" },
-  
+     "web_accessible_resources": [
+        "quotaBuddy.css"
+    ],
     "content_scripts": [
     {
       "matches": ["https://*.decipherinc.com/*","http://*.decipherinc.com/*"],      
+      "css": ["quotaBuddy.css"],      
       "js": ["Shortcuts.js","AnswerForMe.js"]
     }
   ],

@@ -82,10 +82,41 @@ function main() {
         });
     }
 
+    function searchQuotas(){
+        var searchVal = $(this).val().toLowerCase();
+        var searchTRs = $('#qbTable table tr');
+        searchTRs.each(function(){
+            var _this = $(this);
+            var _thisVal = _this.find('a').text().toLowerCase();
+            if (_thisVal.indexOf(searchVal) > -1){
+                _this.show();
+            }else{
+                _this.hide();
+            }
+
+                
+            
+        });
+    }
+
     //start quota stuff
     //quotaBuddy
-    if (url2.indexOf('tab=quota')!=-1){       
-        $('<div id="quotaBuddy"><div id="qbHead">Quota Buddy<span id="hideAll" class="clickable spQB">Hide</span><span id="showAll" class="clickable spQB">Show</span></div><div id="qbTable"><table></table></div></div>').insertAfter('#fwheader');
+    if (url2.indexOf('tab=quota')!=-1){ 
+
+        $('<div id="quotaBuddy">'+
+            '<div id="qbHead">'+
+                '<div id="qbSearch"><input type="text" name="quotaLU" placeholder="Quota Buddy" /></div>'+
+                '<div class="spQB">'+
+                    '<button id="hideAll" class="spQBa red">-</button>'+
+                    '<button id="showAll" class="spQBa green">+</button>'+
+                '</div>'+
+                '<div class="clear"></div>'+
+            '</div>'+
+            '<div id="qbTable">'+
+                '<table></table>'+
+            '</div>'+
+        '</div>').insertAfter('#fwheader');
+
         $('#hideAll').on('click', hideAll);
         $('#showAll').on('click', showAll);
         injectJs(gotoquota);
@@ -94,11 +125,12 @@ function main() {
         var qBuddyTdiv = $('#qbTable');
         var qBuddyT = $('#qbTable table');
         var qTables = $('table.nquota');
+        var tabContent = document.getElementById("tab-content").getBoundingClientRect();
 
         qBuddy.css({
             'position': 'absolute',
             'height': ($(window).height() - 33) + "px",
-            'width': "250px"
+            'width': (tabContent.left - 10) + "px"
         });
         qBuddyTdiv.css({
             'height': ($(window).height() - 58) + "px",
@@ -107,13 +139,16 @@ function main() {
         qTables.each(function(){
             var _this = $(this);
             var _thisid = $(this).get(0).id;
+            var _thisSheet = $(this).parent('div').prev().find('span').text();
             var _thisHidDiv = _this.parent('div').get(0).id;
             var _thisText = _this.find('.nquotaDescription').text();
 
-            qBuddyT.append('<tr><td><a href=\"javascript:void(0)\" class=\"'+_thisHidDiv+'\" data-goto=\"'+_thisid+'\"onclick=\"gotoquota(this)\">'+_thisText+'</a></td></tr>');
+            qBuddyT.append('<tr><td><a href=\"javascript:void(0)\" class=\"'+_thisHidDiv+'\" title=\"'+_thisSheet+'\" data-goto=\"'+_thisid+'\"onclick=\"gotoquota(this)\">'+_thisText+'</a></td></tr>');
 
         });
 
+        var qbSearch = $('#qbSearch input');
+        qbSearch.on('keyup',searchQuotas);
     }
 
 

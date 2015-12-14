@@ -12,9 +12,37 @@
 #quotaBuddy div#qbHead{
 	font-weight: bold;
 	border-bottom: 3px solid #DEDEDE;
+	height: 30px;
 }
 #quotaBuddy div#qbHead span{
 	float: right;
 	padding-left: 10px;
-
+}
+.spQB{
+	width: 25%;
+	height: 27px;
+	padding: 0px;
+	vertical-align: middle;
+	float: right;
+}
+.spQBa{
+	width:50%;
+	height: 100%;
+	color: white;
+	margin: 0px;
+	border: none;
+}
+.red{background-color: #ff4d4d;}
+.green{background-color: #4dff4d;}
+#qbSearch{
+	width: 75%;
+	float: left;
+}
+#qbSearch input{
+	width: 100%;
+	border: none;
+	border-radius: 0px;
+}
+.clear{
+	clear: both;
 }
