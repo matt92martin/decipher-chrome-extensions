@@ -1,13 +1,3 @@
-// ==UserScript==
-// @name       Survey Shortcuts
-// @namespace  http://use.i.E.your.homepage/2
-// @version    0.1
-// @description  enter something useful
-// @match      https://v2.decipherinc.com/*
-// @match      http://v2.decipherinc.com/*
-// @copyright  2012+, You
-// ==/UserScript==
-
 // a function that loads jQuery and calls a callback function when jQuery has finished loading
 function addJQuery(callback) {
   var script = document.createElement("script");

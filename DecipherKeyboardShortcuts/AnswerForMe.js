@@ -45,8 +45,6 @@ else if ($('.devToggle.expanded').length){
     $('.surveyInfo, .survey-info').toggle();
 }
 
-//Focus cursor on input box
-//$('input[type=text]').first().focus();
 
 function clearValues()
 {
@@ -185,6 +183,11 @@ function gotoPage(){
         clearValues();
         return;
     }
+    $(document).on('keypress',function(e) {
+        if (e.keyCode == 27) { 
+            return;
+        }
+    });
 
     fillNext();
 
@@ -210,10 +213,10 @@ function range(start, end)
 function fillPage(){
     //Only fill dev questions if there is a term
     if ($(".devContainer:has(div.surveyQuestion, div.question)").length){
-        if ($("tr,th").has("span:contains('TERM')").length){
+        if ($(".even, .odd").has("span:contains('TERM')").length){
             fillRadio();
         }
-        $('input[ type=submit]').click();
+        $('input:submit').click();
         return;
     }
 
@@ -284,7 +287,7 @@ function fillText(){
 //Currently only works for selects
 function fillOpenSpecify(){
 
-    var $text = $("input[type=text]");
+    var $text = $("input:text");
     if ($text.length){
         $text.each(function() {
             select = $(this).closest('tr').find('td select');            
@@ -302,7 +305,7 @@ function fillNumber(amount,range){
     if (amount){
 
         amountleft = amount;
-        numbers = $(".number tr:has(input[type=text])");
+        numbers = $(".number tr:has(input:text)");
         if (!numbers.length){
             return false;
         }
@@ -319,12 +322,12 @@ function fillNumber(amount,range){
             numbers.each(function(){
                 for (var i=0;i<count;i++)
                 {
-                    $(this).find(".element input[type=text]").eq(i).val(lastamount).trigger('change');
+                    $(this).find(".element input:text").eq(i).val(lastamount).trigger('change');
                     if (i==count-1){
-                        $(this).find(".element input[type=text]").eq(i).val(lastamount).trigger('change');
+                        $(this).find(".element input:text").eq(i).val(lastamount).trigger('change');
                     }
                     else{
-                        $(this).find(".element input[type=text]").eq(i).val(newamount).trigger('change');
+                        $(this).find(".element input:text").eq(i).val(newamount).trigger('change');
                     }
 
 
@@ -337,12 +340,12 @@ function fillNumber(amount,range){
             lastamount = newamount + (amount - (newamount*count));
             for (var i=0;i<count;i++)
             {
-                numbers.eq(i).find(".row-legend input[type=text]").val(lastamount).trigger('change');
+                numbers.eq(i).find(".row-legend input:text").val(lastamount).trigger('change');
                 if (i==count-1){
-                    numbers.eq(i).find(".element input[type=text]").val(lastamount).trigger('change');
+                    numbers.eq(i).find(".element input:text").val(lastamount).trigger('change');
                 }
                 else{
-                    numbers.eq(i).find(".element input[type=text]").val(newamount).trigger('change');
+                    numbers.eq(i).find(".element input:text").val(newamount).trigger('change');
                 }
 
             }
@@ -351,10 +354,10 @@ function fillNumber(amount,range){
     }
     else{
 
-        var $numbers = $(".number").find("input[type=text]");
+        var $numbers = $(".number").find("input:text");
         if ($numbers.length){
 
-            qtext = $('.survey-q-question-text').text();            
+            qtext = $('.survey-q-question-text, .question-text').text();            
             if ($numbers.length == 1 && (qtext.toLowerCase().indexOf("age") >= 0 || qtext.toLowerCase().indexOf("old are you") >= 0 )){
                 $numbers.val('33').trigger('change');
             }
@@ -373,13 +376,13 @@ function fillNumber(amount,range){
 function fillFloat(){
 
         
-    numbers = $(".float tr:has(input[type=text])");              
+    numbers = $(".float tr:has(input:text)");              
     if (!numbers.length){
         return false;
     }
     
     //numbers.each(function(){
-        $(numbers).find(".element input[type=text]").val(10).trigger('change');
+        $(numbers).find(".element input:text").val(10).trigger('change');
     //});
         
      
@@ -395,7 +398,7 @@ function getRandomInt(min, max) {
 
 
 function fillOE(tr){
-    var $text = tr.find("input:text]");
+    var $text = tr.find("input:text ");
     if ($text.length){
         $text.each(function() {
             $(this).val(93612).trigger('change');
@@ -416,37 +419,34 @@ function fillTextArea(){
 }
 
 function fillRadio(){
-    $tableheaders = $('table.survey-q-grid tbody tr th.survey-q-grid-collegend');
+    var $tableheaders = $('.col-legend, .survey-q-grid-collegend');
+
+    var $tr = $(".even:has('input:radio'), .odd:has('input:radio')");
+    $tr.find("input:radio").prop('checked', false).change();
 
     if ($tableheaders.length){
-        $tr = $("tr:has('input:radio')");
         
-        $tr.find("input:radio").prop('checked', false).change();
         
-        $badheaders = $tr.closest('table').find('th').has("span:contains('TERM')");
+        var $badheaders = $tableheaders.has("span:contains('TERM')");
+        $badheaders = $badheaders.map(function(){return $tableheaders.index($(this));});
+        
 
-        headerCount = $tr.closest('table').find('th').length;
-        
         $tr.each(function(){
 
             fillOE($(this));
-            radio = $(this).find("input[type=radio]");
-            if ($badheaders.length != radio.length){
-                $($badheaders.get().reverse()).each(function(index){
-                    radio = radio.not(radio.eq($(this).index()));
+            radio = $(this).find("input:radio");
+            if ($badheaders.length && ($badheaders.length != radio.length)){
+                radio = $.grep(radio, function(n, i) {
+                    return $.inArray(i, $badheaders) ==-1;
                 });
             }
             
-            $(radio[Math.floor(Math.random()*radio.length)]).parent().click();//.prop('checked', true).change();
+            $(radio[Math.floor(Math.random()*radio.length)]).click();
             
                             
         });
     }
     else{
-        
-        $tr = $(".even:has('input:radio'), .odd:has('input:radio')");
-
-        $tr.find("input:radio").prop('checked', false).change();
         
         allterms = $tr.has("span:contains('TERM')").not($tr.has("input:text"));
         notterms = allterms.has("span[title*='not']");
@@ -459,12 +459,6 @@ function fillRadio(){
             $(rows[Math.floor(Math.random()*rows.length)]).find('input:radio').click();
         }
     }
-    //Fancy boxes
-   /* $("div").not($("div:has(span:contains('TERM'))")).not($("div:has(div input[type=text])")).each(function(){
-        radio = $(this).find("input[type=radio]");
-        $(radio[Math.floor(Math.random()*radio.length)]).prop('checked', true);
-    });
-    */
 }
 
 
@@ -482,7 +476,7 @@ function fillCheckBox(atmost,atleast,exactly){
         var $tr = $(".answers .even, .answers .odd");
         $tr.find("input:checkbox").prop('checked', false).change();
         
-        var allCheckbox = $tr.has("input:checkbox").not($tr.has("input:text"));
+        var allCheckbox = $tr.has("input:checkbox"); //not($tr.has("input:text"))
 
         var allterms = allCheckbox.has("span:contains('TERM')");
         var notTerms = allterms.has("span[title*='not']");
@@ -507,26 +501,26 @@ function fillCheckBox(atmost,atleast,exactly){
         }
 
 
-        $tableheaders = $('.answers table tbody tr th.survey-q-grid-collegend, .answers table tbody tr th.col-legend');
+        $tableheaders = $('.survey-q-grid-collegend, .col-legend');
         if ($tableheaders.length){
 
-            // var trs = allCheckbox.not($("tr.naRow, .no-answer"));
-            // notexclusive = trs.has('input[type=checkbox]:not(.exclusive)');
-            // if (notexclusive.length){
-            //     trs = notexclusive;
-            // }
-
-            if ($("h3.survey-q-error-text:contains('in this column')").length){
+            if (    $("h3.survey-q-error-text:contains('in this column')").length || 
+                    (
+                        ($('.col-legend.hasError').length != $('.col-legend').length) && 
+                        $('.col-legend.hasError').length
+                    ) 
+                ){
                 for (var i=0;i<atmost;i++){
                     trs.eq(i).each(function(){
-                        $(this).find("input[type=checkbox]").parent().click();
+                        fillOE($(this));
+                        $(this).find("input:checkbox").click();
                     });
                 }
             }else{
                 trs.each(function(){
-                    console.log($(this));
+                    fillOE($(this));
                     for (var i=0;i<atmost;i++){
-                        $(this).find("input[type=checkbox]").eq(i).parent().click();
+                        $(this).find("input:checkbox").eq(i).click();
                     }
                 });
             }
@@ -535,6 +529,8 @@ function fillCheckBox(atmost,atleast,exactly){
         else{
             for (var i=0;i<atmost;i++){
                 trs.eq(i).each(function(){
+
+                    fillOE($(this));
                     $(this).find("input:checkbox").click();
                 });
             }
@@ -565,20 +561,23 @@ function fillNext(){
     fillPage();
     //Doesn't actually do anything because the pause is too short and aren't checking status
     //setTimeout(function(){},0);
-    // nextPage();
+    nextPage();
 
 }
 
 function nextPage(){
-    $('input[type=submit]').removeAttr('disabled').click();
+    $('input:submit').removeAttr('disabled').click();
 
     //for apple study
-    $('button[type=submit]').removeAttr('disabled').click();
+    $('button:submit').removeAttr('disabled').click();
+
+    //for quotas popups
+    $('button.ui-button').click()
 }
 
 function straightLine(index){
    index -= 1;
-    $('tr.even, tr.odd').each(function(){
+    $('.even, .odd').each(function(){
            $('input:radio:eq(' + index + ')', $(this)).click();
    });
    //nextPage();
