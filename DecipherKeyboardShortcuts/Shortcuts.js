@@ -49,6 +49,7 @@ function main() {
         "}" +
     "}";
 
+
     //Some constructor here might be nice
     function hideAll(){
         var allDivs = $('div[id^="div"]'); 
@@ -105,7 +106,8 @@ function main() {
             '<div id="qbTable">'+
                 '<table></table>'+
             '</div>'+
-        '</div>').insertAfter('#fwheader');
+        '</div>' +
+        '<div id="toggleQuotabuddy" class="qbshow">&gt;</div>').insertAfter('#fwheader');
 
         $('#hideAll').on('click', hideAll);
         $('#showAll').on('click', showAll);
@@ -116,15 +118,44 @@ function main() {
         var qBuddyT = $('#qbTable table');
         var qTables = $('table.nquota');
         var tabContent = document.getElementById("tab-content").getBoundingClientRect();
+        var qWidth = (tabContent.left - 10);
 
         qBuddy.css({
             'position': 'absolute',
             'height': ($(window).height() - 33) + "px",
-            'width': (tabContent.left - 10) + "px"
+            'width': qWidth + "px"
         });
-        qBuddyTdiv.css({
-            'height': ($(window).height() - 58) + "px",
-        });
+        qBuddyTdiv.css({'height': ($(window).height() - 58) + "px"});
+
+        
+
+        (function(){
+            $('#toggleQuotabuddy').on('click', function(){
+                var togQB = $(this);
+
+                if (togQB.hasClass('qbshow')){
+                    //I am horrible at animating...Send help
+                    qBuddy.hide();
+                    togQB.hide();
+                    togQB.text('>');
+                    togQB.css({
+                        'opacity': 0.5,
+                        'left': 0
+                        });
+                    togQB.show('slide', {
+                        direction: 'left'
+                        }, 500);
+                    togQB.toggleClass('qbshow');
+
+                }else {
+                    togQB.css({'left': qWidth});
+                    togQB.toggleClass('qbshow');
+                    togQB.text('<');
+                    qBuddy.show();
+
+                }
+            }).trigger('click');
+        })();
 
         qTables.each(function(){
             var _this = $(this);
