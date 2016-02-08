@@ -11,7 +11,7 @@ function addJQuery(callback) {
 }
 
 // load jQuery and execute the main function   
-if (window.location.href.indexOf('v2.decipherinc.com/survey/')!=-1){        
+if (window.location.href.indexOf('.decipherinc.com/survey/')!=-1){        
     addJQuery(main);
 }
 
