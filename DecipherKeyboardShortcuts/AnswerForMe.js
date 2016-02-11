@@ -418,47 +418,113 @@ function fillTextArea(){
     return false;
 }
 
+function setOE(inputField) {
+	var text = " ";
+	
+	var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+	for(var i=0;i<10;i++)
+		text += charset.charAt(Math.floor(Math.random() * charset.length));
+
+	 inputField.val(text);
+}
+
 function fillRadio(){
-    var $tableheaders = $('.col-legend, .survey-q-grid-collegend');
+    
+	$('.answers').each(function() {
+		$currQuestion = $(this);
+		$allHeaders = $currQuestion.find('.col-legend, .top-legend .legend');
+		$allRows = $currQuestion.find(".even:has('input:radio'), .odd:has('input:radio')");
 
-    var $tr = $(".even:has('input:radio'), .odd:has('input:radio')");
-    $tr.find("input:radio").prop('checked', false).change();
+		$goodColInd = [];
+		$goodCols = [];
+		
+		$goodRowInd = [];
+		$goodRows = [];
+		
+		$allHeaders.each(function() {
+			if (!$(this).find("span:contains('TERM')").length) {
+				$goodColInd.push($allHeaders.index($(this)));
+				$goodCols.push($ (this));
+			}
+		});
+		
+		$allRows.each(function() {
+			if (!$(this).find("span:contains('TERM')").length) {
+				$goodRowInd.push($allRows.index($(this)));
+				$goodRows.push($ (this));
+			}
+		});
+		
+		if ($currQuestion.find('.groupingRows').length) {
+			
+			//console.log($goodRowInd);
+			
+			for (var currTRE in $goodRowInd) {
+				var currTR = $allRows.eq($goodRowInd[currTRE]);
+				
+				//console.log(currTRE);
 
-    if ($tableheaders.length){
-        
-        
-        var $badheaders = $tableheaders.has("span:contains('TERM')");
-        $badheaders = $badheaders.map(function(){return $tableheaders.index($(this));});
-        
+				if (!currTR.find(".row-legend span:contains('TERM')").length) {
+					var item = $goodColInd[Math.floor(Math.random()*$goodColInd.length)];
+					var clickableArea = currTR.find('.groupingRows:has(input:radio)').eq(item);
 
-        $tr.each(function(){
+					var clickRadio = clickableArea.find('input:radio');
+					if (!clickRadio.is(':checked')) {
+						clickRadio.parent().click();
+					}
 
-            fillOE($(this));
-            radio = $(this).find("input:radio");
-            if ($badheaders.length && ($badheaders.length != radio.length)){
-                radio = $.grep(radio, function(n, i) {
-                    return $.inArray(i, $badheaders) ==-1;
-                });
-            }
-            
-            $(radio[Math.floor(Math.random()*radio.length)]).click();
-            
-                            
-        });
-    }
-    else{
-        
-        allterms = $tr.has("span:contains('TERM')").not($tr.has("input:text"));
-        notterms = allterms.has("span[title*='not']");
-        noterms = $tr.not($tr.has("span:contains('TERM')")).not($tr.has("input:text"));
-        rows = noterms;
-        if (notterms.length){
-            rows = notterms;
-        }
-        if (rows.length) {
-            $(rows[Math.floor(Math.random()*rows.length)]).find('input:radio').click();
-        }
-    }
+					currTR.find('.oe-left, .text').each(function() {
+						setOE($(this));
+					});
+				}
+			}
+		} else {
+			if ($goodCols.length) {
+				for (var currColI in $goodColInd) {
+					
+					var currCol = $allHeaders.eq($goodColInd[currColI]);
+					
+					var item = $goodRowInd[Math.floor(Math.random()*$goodRowInd.length)];
+					var currInd = $allHeaders.index(currCol);
+					var currRow = $allRows.eq(item);
+					
+					if ($.inArray(currInd, $goodColInd) != -1) {
+					
+						var clickableArea = $allRows.eq(item).find('.groupingCols:has(input:radio)').eq(currInd);
+						var clickRadio = clickableArea.find('input:radio');
+						
+						if (!clickRadio.is(':checked')) {
+							clickRadio.parent().click();
+						}
+
+						currCol.find('.oe-left, .text, input:text').each(function() {
+							setOE($(this));
+						});
+					}
+				}
+			} else {
+				var item = $goodRowInd[Math.floor(Math.random()*$goodRowInd.length)];
+				
+				var clickableArea = $allRows.eq(item);
+				var clickRadio = clickableArea.find('input:radio');
+				
+				if (!clickRadio.is(':checked')) {
+						if (clickRadio.closest('.even, .odd').find('.fir-icon').length) {
+							clickRadio.closest('.even, .odd').find('.fir-icon').click();
+						} else {
+							clickRadio.click();
+						}
+					}
+
+				clickableArea.find('.oe-left, .text, input:text').each(function() {
+					setOE($(this));
+				});
+				
+			}
+		}
+		
+	});
 }
 
 
