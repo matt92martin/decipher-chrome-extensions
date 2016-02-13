@@ -98,8 +98,8 @@ function main() {
             '<div id="qbHead">'+
                 '<div id="qbSearch"><input type="text" name="quotaLU" placeholder="Quota Buddy" /></div>'+
                 '<div class="spQB">'+
-                    '<button id="hideAll" class="spQBa red">-</button>'+
-                    '<button id="showAll" class="spQBa green">+</button>'+
+                    '<button id="hideAll" class="spQBa qbred">-</button>'+
+                    '<button id="showAll" class="spQBa qbgreen">+</button>'+
                 '</div>'+
                 '<div class="clear"></div>'+
             '</div>'+

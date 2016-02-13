@@ -33,8 +33,8 @@
 	margin: 0px;
 	border: none;
 }
-.red{background-color: #ff4d4d;}
-.green{background-color: #4dff4d;}
+.qbred{background-color: #ff4d4d;}
+.qbgreen{background-color: #4dff4d;}
 #qbSearch{
 	width: 75%;
 	float: left;
