@@ -25,7 +25,8 @@ function main() {
 
 
 
-    var url2 = window.location.href;
+    // var url2 = window.location.href;
+    var url2 = window.location.protocol +'//' + window.location.host + window.location.pathname;
 
     function injectJs(srcFile) {
         var src = document.createElement('script');
@@ -335,7 +336,8 @@ function main() {
     }
 
     function getProject(){
-        url = window.location.href;
+        // url = window.location.href;
+        url = window.location.protocol +'//' + window.location.host + window.location.pathname;
         if (url.indexOf('selfserve/')!=-1){
             urlback = url.split('selfserve/')[1];
             urlback = urlback.split('?')[0];
