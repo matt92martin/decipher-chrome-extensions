@@ -25,8 +25,8 @@ function main() {
 
 
 
-    // var url2 = window.location.href;
-    var url2 = window.location.protocol +'//' + window.location.host + window.location.pathname;
+    var url2 = window.location.href;
+    // var url2 = window.location.protocol +'//' + window.location.host + window.location.pathname;
 
     function injectJs(srcFile) {
         var src = document.createElement('script');
@@ -160,8 +160,8 @@ function main() {
 
         qTables.each(function(){
             var _this = $(this);
-            var _thisid = $(this).get(0).id;
-            var _thisSheet = $(this).parent('div').prev().find('span').text();
+            var _thisid = _this.get(0).id;
+            var _thisSheet = _this.parent('div').prev().find('span').text();
             var _thisHidDiv = _this.parent('div').get(0).id;
             var _thisText = _this.find('.nquotaDescription').text();
 
