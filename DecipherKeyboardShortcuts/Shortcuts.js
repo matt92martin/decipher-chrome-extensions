@@ -1,32 +1,14 @@
-// a function that loads jQuery and calls a callback function when jQuery has finished loading
-function addJQuery(callback) {
-  var script = document.createElement("script");
-  script.setAttribute("src", "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js");
-  script.addEventListener('load', function() {
-    var script = document.createElement("script");
-    script.textContent = "window.jQ=jQuery.noConflict(true);(" + callback.toString() + ")();";
-    document.body.appendChild(script);
-  }, false);
-  document.body.appendChild(script);
-}
-
-
-
-addJQuery(main);
-
-
-
-
-
-// the guts of this userscript
-function main() {
+(function main() {
     var tableCSS = {};
-    
+
+    console.log('Decipher Survey Helper loaded.');
 
 
-
-    var url2 = window.location.href;
-    // var url2 = window.location.protocol +'//' + window.location.host + window.location.pathname;
+    // var url2 = window.location.href;
+    var url_host = window.location.host;
+    var url_path = window.location.pathname;
+    var url_search = window.location.search;
+    var url2 = window.location.protocol +'//' + url_host + url_path + url_search;
 
     function injectJs(srcFile) {
         var src = document.createElement('script');
@@ -34,21 +16,22 @@ function main() {
         document.body.appendChild(src);
     }
 
-    var gotoquota = "function gotoquota(el){" +
-        "var eel = $(el);" +
-        "var eli = eel.attr('class');" +
-        "var elid = $('#'+eli);" +
-        "var elgo = eel.data('goto');" +
-        "var elgoto = document.getElementById(elgo);" +
+    function gotoquota(el){
+        var eel = $(el);
+        var eli = eel.attr('class');
+        var elid = $('#'+eli);
+        var elgo = eel.data('goto');
+        var elgoto = document.getElementById(elgo);
 
-        "if (elid.is(':visible')){" +
-            "window.location.hash = '#'+elgo;" +
-        "}else{" +
-            "var _thisclick = elid.prev('h2').find('a').get(0);" +
-            "_thisclick.click();" +
-            "window.location.hash = '#'+elgo;" +
-        "}" +
-    "}";
+        if (elid.is(':visible')){
+            window.location.hash = '#'+elgo;
+        }else{
+            var _thisclick = elid.prev('h2').find('a').get(0);
+            _thisclick.click();
+            window.location.hash = '#'+elgo;
+        }
+    }
+
 
 
     //Some constructor here might be nice
@@ -93,22 +76,23 @@ function main() {
 
     //start quota stuff
     //quotaBuddy
-    if (url2.indexOf('tab=quota')!=-1){ 
+    if (url2.indexOf('tab=quota')!=-1){
 
-        $('<div id="quotaBuddy">'+
-            '<div id="qbHead">'+
-                '<div id="qbSearch"><input type="text" name="quotaLU" placeholder="Quota Buddy" /></div>'+
-                '<div class="spQB">'+
-                    '<button id="hideAll" class="spQBa qbred">-</button>'+
-                    '<button id="showAll" class="spQBa qbgreen">+</button>'+
-                '</div>'+
-                '<div class="clear"></div>'+
-            '</div>'+
-            '<div id="qbTable">'+
-                '<table></table>'+
-            '</div>'+
-        '</div>' +
-        '<div id="toggleQuotabuddy" class="qbshow">&gt;</div>').insertAfter('#fwheader');
+        var quotaBuddyHtml =`<div id="quotaBuddy">
+            <div id="qbHead">
+                <div id="qbSearch"><input type="text" name="quotaLU" placeholder="Quota Buddy" /></div>
+                <div class="spQB">
+                    <button id="hideAll" class="spQBa qbred">-</button>
+                    <button id="showAll" class="spQBa qbgreen">+</button>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div id="qbTable">
+                <table></table>
+            </div>
+        </div>
+        <div id="toggleQuotabuddy" class="qbshow">&gt;</div>`;
+        $(quotaBuddyHtml).insertAfter('#fwheader');
 
         $('#hideAll').on('click', hideAll);
         $('#showAll').on('click', showAll);
@@ -143,9 +127,7 @@ function main() {
                         'opacity': 0.5,
                         'left': 0
                         });
-                    togQB.show('slide', {
-                        direction: 'left'
-                        }, 500);
+                    togQB.show('slide');
                     togQB.toggleClass('qbshow');
 
                 }else {
@@ -351,8 +333,4 @@ function main() {
     }
 
 
-
-
-
-
-}
+})();

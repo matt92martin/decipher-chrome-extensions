@@ -1,18 +1,5 @@
-// a function that loads jQuery and calls a callback function when jQuery has finished loading
-function addJQuery(callback) {
-  var script = document.createElement("script");
-  script.setAttribute("src", "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js");
-  script.addEventListener('load', function() {
-    var script = document.createElement("script");
-    script.textContent = "window.jQ=jQuery.noConflict(true);(" + callback.toString() + ")();";
-    document.body.appendChild(script);
-  }, false);
-  document.body.appendChild(script);
-}
-
-// load jQuery and execute the main function   
 if (window.location.href.indexOf('.decipherinc.com/survey/')!=-1){        
-    addJQuery(main);
+    main();
 }
 
 
@@ -27,7 +14,7 @@ function main() {
       return localStorage[key]=value;
   };
   GM_deleteValue=function (key) {
-      return delete localStorage[key];
+      return localStorage.removeItem(key);
   };
 //}  
   
@@ -46,8 +33,7 @@ else if ($('.devToggle.expanded').length){
 }
 
 
-function clearValues()
-{
+function clearValues(){
     GM_deleteValue("question");
     GM_deleteValue("qlabel");
     GM_deleteValue("dupecount");
@@ -145,6 +131,7 @@ function gotoPage(){
     //quit if no question set to go to
     var value = '';
     if (!GM_getValue("question")){
+        clearValues();
         return;
     }
     else{
@@ -171,6 +158,7 @@ function gotoPage(){
         else{
             console.log("Failed to complete page");
             console.log(dupecount);
+            clearValues();
             return;
         }
     }
@@ -183,8 +171,9 @@ function gotoPage(){
         clearValues();
         return;
     }
-    $(document).on('keypress',function(e) {
-        if (e.keyCode == 27) { 
+    $(document).on('keydown',function(e) {
+        if (e.keyCode == 27) {
+            clearValues();
             return;
         }
     });
