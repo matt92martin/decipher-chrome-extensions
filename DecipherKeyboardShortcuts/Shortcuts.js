@@ -4,7 +4,7 @@
     console.log('Decipher Survey Helper loaded.');
 
 
-    // var url2 = window.location.href;
+    var url1 = window.location.href;
     var url2 = window.location.protocol +'//' + url_host + url_path + url_search;
 
     var url_host = window.location.host;
@@ -69,15 +69,12 @@
             }else{
                 _this.hide();
             }
-
-                
-            
         });
     }
 
     //start quota stuff
     //quotaBuddy
-    if (url2.indexOf('tab=quota')!=-1){
+    if (url1.indexOf('tab=quota')!=-1){
 
         var quotaBuddyHtml =`<div id="quotaBuddy">
             <div id="qbHead">
@@ -113,9 +110,7 @@
         });
         qBuddyTdiv.css({'height': ($(window).height() - 58) + "px"});
 
-        
 
-        (function(){
             $('#toggleQuotabuddy').on('click', function(){
                 var togQB = $(this);
 
@@ -137,9 +132,9 @@
                     qBuddy.show();
 
                 }
-            }).trigger('click');
-        })();
+        }).trigger('click');
 
+        var quotaSheets = [];
         qTables.each(function(){
             var _this = $(this);
             var _thisid = _this.get(0).id;
@@ -147,8 +142,21 @@
             var _thisHidDiv = _this.parent('div').get(0).id;
             var _thisText = _this.find('.nquotaDescription').text();
 
-            qBuddyT.append('<tr><td><a href=\"javascript:void(0)\" class=\"'+_thisHidDiv+'\" title=\"'+_thisSheet+'\" data-goto=\"'+_thisid+'\"onclick=\"gotoquota(this)\">'+_thisText+'</a></td></tr>');
-
+            var rowtext =   `<tr>
+                                <td class="quotaTogglers">
+                                    <a  href="javascript:void(0)" 
+                                        class="`+_thisHidDiv+`" 
+                                        data-goto="`+_thisid+`" 
+                                        onclick="gotoquota(this)"
+                                    >`+_thisText+`</a>
+                                </td>
+                            </tr>`;
+            if (quotaSheets.indexOf(_thisSheet) == -1){
+                var sheetText = `<tr class="quotaTogglersHead"><td>` + _thisSheet.replace(/^sheet: /, '') + `</td></tr>`;
+                quotaSheets.push(_thisSheet);
+                rowtext = sheetText + rowtext;
+            }
+            qBuddyT.append(rowtext);
         });
 
         var qbSearch = $('#qbSearch input');
@@ -158,23 +166,20 @@
 
 
     //cancel editing cell
-    function escape()
-    {
-        if (url2.indexOf('tab=quota')!=-1){        
+    function escape(){
+        if (url1.indexOf('tab=quota')!=-1){
             $("#_cancel").click();
         }
     }
 
     //edit quotas
-    function edit()
-    {
-        if (url2.indexOf('tab=quota')!=-1){
+    function edit(){
+        if (url1.indexOf('tab=quota')!=-1){
             $("#editQuotas").click();
-
         }
     }
 
-    if (url2.indexOf('tab=quota')!=-1){
+    if (url1.indexOf('tab=quota')!=-1){
 
         var curindex = 0;
         var previndex = 0;
@@ -256,39 +261,39 @@
 
     document.addEventListener('keydown', function(e) {
 
-      if (e.keyCode == 69 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//e
+        if (e.keyCode == 69 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//e
             edit();
-      }
-      if (e.keyCode == 27 && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {//escape
-        escape();
         }
-      if (e.keyCode == 84 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt t
-         goTO('survey','?_dj');
-      }
-      else if (e.keyCode == 82 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt r
-         goTO('report','');
-      }
-      else if (e.keyCode == 80 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt p
-         goTO('apps/portal/#/projects/detail','');
-      }
-      else if (e.keyCode == 81 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt q
-         goTO('rep',':dashboard?tab=quota&split=none');
-      }
-      else if (e.keyCode == 87 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt w
-         goTO('admin/sst/list?survey=','');
-      }
-      else if (e.keyCode == 85 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt u
-         goTO('apps/filemanager','');
-      }
-      else if (e.keyCode == 86 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt v
-         goTO('admin/vc/list?file=','/survey.xml');
-      }
-      else if (e.keyCode == 72 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt H
-        goToPage();
-      }
-      else if (e.keyCode == 83 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt s
-        startAtPage();
-      }
+        if (e.keyCode == 27 && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {//escape
+            escape();
+        }
+        if (e.keyCode == 84 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt t
+            goTO('survey','?_dj');
+        }
+        else if (e.keyCode == 82 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt r
+            goTO('report','');
+        }
+        else if (e.keyCode == 80 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt p
+            goTO('apps/portal/#/projects/detail','');
+        }
+        else if (e.keyCode == 81 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt q
+            goTO('rep',':dashboard?tab=quota&split=none');
+        }
+        else if (e.keyCode == 87 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt w
+            goTO('admin/sst/list?survey=','');
+        }
+        else if (e.keyCode == 85 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt u
+            goTO('apps/filemanager','');
+        }
+        else if (e.keyCode == 86 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt v
+            goTO('admin/vc/list?file=','/survey.xml');
+        }
+        else if (e.keyCode == 72 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt H
+            goToPage();
+        }
+        else if (e.keyCode == 83 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt s
+            startAtPage();
+        }
 
     }, false);
 
