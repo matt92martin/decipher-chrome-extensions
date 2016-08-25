@@ -1,14 +1,15 @@
 (function main() {
-    var tableCSS = {};
+
 
     console.log('Decipher Survey Helper loaded.');
 
 
     // var url2 = window.location.href;
+    var url2 = window.location.protocol +'//' + url_host + url_path + url_search;
+
     var url_host = window.location.host;
     var url_path = window.location.pathname;
     var url_search = window.location.search;
-    var url2 = window.location.protocol +'//' + url_host + url_path + url_search;
 
     function injectJs(srcFile) {
         var src = document.createElement('script');
@@ -119,7 +120,6 @@
                 var togQB = $(this);
 
                 if (togQB.hasClass('qbshow')){
-                    //I am horrible at animating...Send help
                     qBuddy.hide();
                     togQB.hide();
                     togQB.text('>');
@@ -263,25 +263,25 @@
         escape();
         }
       if (e.keyCode == 84 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt t
-         goTO('survey/selfserve/','?_dj');
+         goTO('survey','?_dj');
       }
       else if (e.keyCode == 82 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt r
-         goTO('report/selfserve/','');
+         goTO('report','');
       }
       else if (e.keyCode == 80 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt p
-         goTO('apps/portal/#/projects/detail/selfserve/','');
+         goTO('apps/portal/#/projects/detail','');
       }
       else if (e.keyCode == 81 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt q
-         goTO('rep/selfserve/',':dashboard?tab=quota&split=none');
+         goTO('rep',':dashboard?tab=quota&split=none');
       }
       else if (e.keyCode == 87 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt w
-         goTO('/s/sst/sst.html?path=selfserve/','');
+         goTO('admin/sst/list?survey=','');
       }
       else if (e.keyCode == 85 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt u
-         goTO('/apps/filemanager/selfserve/','');
+         goTO('apps/filemanager','');
       }
       else if (e.keyCode == 86 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt v
-         goTO('/admin/vc/list?file=selfserve/','/survey.xml');
+         goTO('admin/vc/list?file=','/survey.xml');
       }
       else if (e.keyCode == 72 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt H
         goToPage();
@@ -292,13 +292,13 @@
 
     }, false);
 
-    var baseURL = 'https://v2.decipherinc.com/';
+    var baseURL = window.location.protocol +'//' + url_host + '/';
 
     function goTO(front,back){
         projectAddress = getProject();
+
         if (projectAddress){
             url = baseURL + front + projectAddress + back;
-            //GM_openInTab(url);
             window.location.href = url;
         }
     }
@@ -306,29 +306,41 @@
     function startAtPage(){
       value = prompt('Which question should I start at?', 'Q');
       if (value) {
-        goTO('survey/selfserve/','?&start-at='+value);
+        goTO('survey','?&start-at='+value);
       }
     }
 
     function goToPage(){
       value = prompt('Which question should I go to?', 'Q');
       if (value) {
-        goTO('survey/selfserve/','?&start-at='+value+'&stop-at='+value+'&debug=flow');
+        goTO('survey','?&start-at='+value+'&stop-at='+value+'&debug=flow');
       }
     }
 
     function getProject(){
-        // url = window.location.href;
-        url = window.location.protocol +'//' + window.location.host + window.location.pathname;
-        if (url.indexOf('selfserve/')!=-1){
-            urlback = url.split('selfserve/')[1];
+        url = window.location.href;
+        // url = window.location.protocol +'//' + window.location.host + window.location.pathname + window.location.hash;
+
+        if (url.match(/(takesurvey\/|survey\/|report\/|rep\/|filemanager\/)/)){
+            url = window.location.protocol +'//' + window.location.host + window.location.pathname;
+            urlback = url.split(/\/filemanager|\/report|\/rep|\/survey|\/takesurvey/)[1];
             urlback = urlback.split('?')[0];
-            urlback = urlback.split(':')[0];        
-            if (url.indexOf('/admin/vc/list')!=-1){            
-                urlback = urlback.substring(0,urlback.lastIndexOf("/"));                        
-            }
+            urlback = urlback.split(':')[0];
+
             return urlback;
+
+        }else if(url.match(/(\/admin\/vc\/list|detail\/|admin\/sst\/list)/)){
+            url = window.location.href;
+            urlback = url.split(/file\=|survey\=|\/detail/)[1]
+
+            if (url.match(/(\/admin\/vc\/list)/)){
+                urlback = urlback.substring(0,urlback.lastIndexOf("/"));
+            }
+
+            //Ensuring that we only have 1 leading "/"
+            return "/" + urlback.replace(/^[\/]+|[\/]+$/, '');
         }
+
         return "";
     }
 
