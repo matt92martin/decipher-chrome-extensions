@@ -2,6 +2,8 @@
     background-color: #F1F1F1;
     border-right: 3px solid #DEDEDE;
   	transition: all 2s linear;
+  	box-sizing: border-box;
+  	z-index: 100;
 }
 #quotaBuddy div#qbTable{
 	overflow-y: scroll;
@@ -25,12 +27,15 @@
 	padding: 0px;
 	vertical-align: middle;
 	float: right;
+	overflow: hidden;
 }
 .spQBa{
-	width:50%;
+	float:left;
+	width: 50%;
 	height: 100%;
 	color: white;
 	margin: 0px;
+	padding: 0px;
 	border: none;
 }
 .qbred{background-color: #ff4d4d;}
@@ -63,4 +68,11 @@
 }
 .qbhide{
 	display: none;
+}
+.quotaTogglersHead{
+	font-weight: bold;
+	text-decoration: underline;
+}
+.quotaTogglers{
+	padding-left: 10px;
 }
