@@ -5,7 +5,7 @@ These Scripts allow keyboard shortcuts to be added to navigate around surveys us
 <br/>
 <br/>
 Installation:<br/>
-TBD
+https://chrome.google.com/webstore/detail/mcfncgaebgedoelcegioclipijnebmbh/publish-delayed
 <br/>
 <br/>
 Shortcuts
