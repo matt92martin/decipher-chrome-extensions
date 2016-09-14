@@ -5,7 +5,7 @@ These Scripts allow keyboard shortcuts to be added to navigate around surveys us
 <br/>
 <br/>
 Installation:<br/>
-https://chrome.google.com/webstore/detail/mcfncgaebgedoelcegioclipijnebmbh/publish-delayed
+https://chrome.google.com/webstore/detail/focusvision-keyboard-shor/mcfncgaebgedoelcegioclipijnebmbh
 <br/>
 <br/>
 Shortcuts
