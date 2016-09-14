@@ -8,20 +8,23 @@
 
 
     "icons": { 
-        "128": "Deciphericon.png" 
+        "128": "src/Deciphericon.png" 
     },
     "web_accessible_resources": [
-        "quotaBuddy.css"
+        "src/quotaBuddy.css"
     ],
 
     "content_scripts": [
         {
-            "matches": ["https://*.decipherinc.com/*","http://*.decipherinc.com/*"],
-            "css": ["quotaBuddy.css"],
+            "matches": [
+                "https://*.decipherinc.com/*",
+                "http://*.decipherinc.com/*"
+            ],
+            "css": ["src/quotaBuddy.css"],
             "js": [
-                "jquery-3.1.0.min.js",
-                "Shortcuts.js",
-                "AnswerForMe.js"
+                "src/jquery-3.1.0.min.js",
+                "src/Shortcuts.js",
+                "src/AnswerForMe.js"
             ],
             "run_at": "document_end"
         }

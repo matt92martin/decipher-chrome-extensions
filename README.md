@@ -5,8 +5,7 @@ These Scripts allow keyboard shortcuts to be added to navigate around surveys us
 <br/>
 <br/>
 Installation:<br/>
-https://chrome.google.com/webstore/detail/answer-for-me/jinpalfobalfahodbmaincnojkijcaic<br/>
-https://chrome.google.com/webstore/detail/decipher-keyboard-shortcu/kchoacpomoohipjomgadlhaejoekbofi 
+TBD
 <br/>
 <br/>
 Shortcuts
