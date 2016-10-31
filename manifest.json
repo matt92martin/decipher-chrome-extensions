@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
 
-    "name": "FocusVision Keyboard Shortcuts for Decipher",
+    "name": "FocusVision Keyboard Shortcuts for the Decipher platform",
     "description": "This extension provides keyboard shortcuts for navigating around surveys",
-    "version": "2016.9.1",
+    "version": "2016.11.1",
 
 
 
@@ -20,7 +20,9 @@
                 "https://*.decipherinc.com/*",
                 "http://*.decipherinc.com/*"
             ],
-            "css": ["src/quotaBuddy.css"],
+            "css": [
+                "src/quotaBuddy.css"
+            ],
             "js": [
                 "src/jquery-3.1.0.min.js",
                 "src/Shortcuts.js",
@@ -29,6 +31,12 @@
             "run_at": "document_end"
         }
     ],
+    "browser_action": {
+        "default_title": "TimeLines",
+        "default_icon": "src/Deciphericon.png",
+        "default_popup": "src/popup.html"
+    },
+
 
     "permissions": ["storage","history"]
 }
