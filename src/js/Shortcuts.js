@@ -368,7 +368,7 @@
 
         }else if(url.match(/(\/admin\/vc\/list|detail\/|admin\/sst\/list)/)){
             var url = window.location.href;
-            urlback = url.split(/file\=|survey\=|\/detail/)[1]
+            urlback = url.split(/file\=|survey\=|\/detail/)[1];
 
             if (url.match(/(\/admin\/vc\/list)/)){
                 var urlback = urlback.substring(0,urlback.lastIndexOf("/"));
