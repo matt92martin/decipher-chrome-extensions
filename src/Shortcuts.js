@@ -5,11 +5,11 @@
 
 
     var url1 = window.location.href;
-    var url2 = window.location.protocol +'//' + url_host + url_path + url_search;
+    // var url2 = window.location.protocol +'//' + url_host + url_path + url_search;
 
     var url_host = window.location.host;
-    var url_path = window.location.pathname;
-    var url_search = window.location.search;
+    // var url_path = window.location.pathname;
+    // var url_search = window.location.search;
 
     function injectJs(srcFile) {
         var src = document.createElement('script');
@@ -22,7 +22,6 @@
         var eli = eel.attr('class');
         var elid = $('#'+eli);
         var elgo = eel.data('goto');
-        var elgoto = document.getElementById(elgo);
 
         if (elid.is(':visible')){
             window.location.hash = '#'+elgo;
@@ -37,7 +36,7 @@
 
     //Some constructor here might be nice
     function hideAll(){
-        var allDivs = $('div[id^="div"]'); 
+        var allDivs = $('div[id^="div"]');
         allDivs.each(function(){
             var _thisDiv = $(this);
             if (_thisDiv.is(':visible')){
@@ -48,7 +47,7 @@
     }
 
     function showAll(){
-        var allDivs = $('div[id^="div"]'); 
+        var allDivs = $('div[id^="div"]');
         allDivs.each(function(){
             var _thisDiv = $(this);
             if (_thisDiv.is(':hidden')){
@@ -60,7 +59,7 @@
 
     function searchQuotas(){
         var searchVal = $(this).val().toLowerCase();
-        var searchTRs = $('#qbTable table tr');
+        var searchTRs = $('#qbTable').find('table tr');
         searchTRs.each(function(){
             var _this = $(this);
             var _thisVal = _this.find('a').text().toLowerCase();
@@ -98,7 +97,7 @@
 
         var qBuddy = $('div#quotaBuddy');
         var qBuddyTdiv = $('#qbTable');
-        var qBuddyT = $('#qbTable table');
+        var qBuddyT = qBuddyTdiv.find('table');
         var qTables = $('table.nquota');
         var tabContent = document.getElementById("tab-content").getBoundingClientRect();
         var qWidth = (tabContent.left - 10);
@@ -144,9 +143,9 @@
 
             var rowtext =   `<tr>
                                 <td class="quotaTogglers">
-                                    <a  href="javascript:void(0)" 
-                                        class="`+_thisHidDiv+`" 
-                                        data-goto="`+_thisid+`" 
+                                    <a  href="javascript:void(0)"
+                                        class="`+_thisHidDiv+`"
+                                        data-goto="`+_thisid+`"
                                         onclick="gotoquota(this)"
                                     >`+_thisText+`</a>
                                 </td>
@@ -159,7 +158,7 @@
             qBuddyT.append(rowtext);
         });
 
-        var qbSearch = $('#qbSearch input');
+        var qbSearch = $('#qbSearch').find('input');
         qbSearch.on('keyup',searchQuotas);
     }
 
@@ -183,6 +182,7 @@
 
         var curindex = 0;
         var previndex = 0;
+        var editor = $("#_editor");
 
         //when cell is clicked
         $("#editQuotas").click(
@@ -199,12 +199,12 @@
 
 
         //when tab is pressed move to next input
-        $("#_editor").keydown(
+        editor.keydown(
             function (e) {
                 if (e.keyCode==9){//tab
                     $('#_save').click();
 
-                    newindex = curindex+1;
+                    var newindex = curindex+1;
                     $('[tabindex=' + newindex +']').focus().click();
 
                     window.setTimeout(highlightText, 0);
@@ -221,7 +221,7 @@
 
         //move editor and highlight input
         function highlightText(){
-            if (! $("#_editor").is(":focus")){
+            if (! editor.is(":focus")){
                 previndex = curindex;
                 curindex = document.activeElement.tabIndex;
 
@@ -235,7 +235,7 @@
         }
 
 
-        $("#_editor").focusout(function() {
+        editor.focusout(function() {
             //$('[tabindex=' + curindex + ']').focus();
         });
 
@@ -257,7 +257,39 @@
 
     }
     //endquotastuff
+    // function keyPressTest(selkeys){
+    //     var alias ={
+    //         //Modifiers
+    //         "shift": 16, "ctrl": 17, "alt": 18,
+    //         //Digits
+    //         "1": 49,"2": 50,"3": 51,"4": 52,"5": 53,"6": 54,"7": 55,"8": 56,"9": 57,"0": 48,
+    //         //Letters
+    //         "A": 65,"B": 66,"C": 67,"D": 68,"E": 69,
+    //         "F": 70,"G": 71,"H": 72,"I": 73,"J": 74,
+    //         "K": 75,"L": 76,"M": 77,"N": 78,"O": 79,
+    //         "P": 80,"Q": 81,"R": 82,"S": 83,"T": 84,
+    //         "U": 85,"V": 86,"W": 87,"X": 88,"Y": 89,"Z": 90
+    //     }
+    //     // return key[selkey] || key[alias[selkey]];
+    // }
+    // function keyPressTests(){
+    //     var keylist = arguments;
+    //     console.log(keylist);
+    //     Object.keys(keylist).map(function(selkey,idx){
+    //         if(!keyPressTest(keylist)){
+    //             return false;
+    //         }
+    //     });
+    //
+    //     return true;
+    // }
 
+    // var map = {};
+    // onkeydown = onkeyup = function(e){
+    //     map[e.keyCode] = e.type == 'keydown';
+    //     // Selected('a','b')
+    //     keyPressTests(map);
+    // }
 
     document.addEventListener('keydown', function(e) {
 
@@ -300,23 +332,23 @@
     var baseURL = window.location.protocol +'//' + url_host + '/';
 
     function goTO(front,back){
-        projectAddress = getProject();
+        var projectAddress = getProject();
 
         if (projectAddress){
-            url = baseURL + front + projectAddress + back;
+            var url = baseURL + front + projectAddress + back;
             window.location.href = url;
         }
     }
 
     function startAtPage(){
-      value = prompt('Which question should I start at?', 'Q');
+      var value = prompt('Which question should I start at?', 'Q');
       if (value) {
         goTO('survey','?&start-at='+value);
       }
     }
 
     function goToPage(){
-      value = prompt('Which question should I go to?', 'Q');
+      var value = prompt('Which question should I go to?', 'Q');
       if (value) {
         goTO('survey','?&start-at='+value+'&stop-at='+value+'&debug=flow');
       }
@@ -335,11 +367,11 @@
             return urlback;
 
         }else if(url.match(/(\/admin\/vc\/list|detail\/|admin\/sst\/list)/)){
-            url = window.location.href;
+            var url = window.location.href;
             urlback = url.split(/file\=|survey\=|\/detail/)[1]
 
             if (url.match(/(\/admin\/vc\/list)/)){
-                urlback = urlback.substring(0,urlback.lastIndexOf("/"));
+                var urlback = urlback.substring(0,urlback.lastIndexOf("/"));
             }
 
             //Ensuring that we only have 1 leading "/"
@@ -349,5 +381,9 @@
         return "";
     }
 
+
+    function literalyJustForHibo(){
+
+    }
 
 })();
