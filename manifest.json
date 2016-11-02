@@ -8,9 +8,9 @@
       "page": "src/options.html",
       "chrome_style": true
     },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
-
-    "icons": { 
+    "icons": {
         "128": "src/Deciphericon.png" 
     },
     "web_accessible_resources": [

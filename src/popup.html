@@ -3,13 +3,51 @@
 <head>
 	<title>TimeLines</title>
     <link rel="stylesheet" href="css/popup.css">
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <script src="js/handlebars-v4.0.5.js"></script>
 </head>
 <body>
-    <div class="container">
-        <input type="text" id="date">
-        <input type="text" id="project">
-        <input type="text" id="activity">
+
+<div id="main">
+</div>
+
+
+<script id="list" type="text/x-handlebars-template">
+    <button id="add-list-item">Add new item</button>
+    <h1>{{title}}</h1>
+    <div class="body">
+        {{body}}
     </div>
-	<script src="TimeLines.js"></script>
+</script>
+
+<script id="add" type="text/x-handlebars-template">
+    <form id="form" class="form">
+        <div class="form-item hidden"><input type="text" name="uniqueID"></div>
+        <div class="flex-group">
+            <div class="form-item"><input type="text" name="portal" placeholder="Portal Link"></div>
+        </div>
+        <div class="flex-group">
+            <div class="form-item"><input type="text" name="projectname" placeholder="Project Name"></div>
+        </div>
+        <div class="flex-group">
+            <div class="form-item"><input type="text" name="team" placeholder="Team"></div>
+            <div class="form-item"><input type="text" name="type" placeholder="Request Type"></div>
+            <div class="form-item"><input type="text" name="hours" placeholder="Actual Hours"></div>
+        </div>
+        <div class="flex-group">
+            <div class="form-item"><input type="text" name="complexity" placeholder="Complexity"></div>
+            <div class="form-item"><input type="text" name="noq" placeholder="No. of questions"></div>
+            <div class="form-item"><input type="text" name="programmername" placeholder="Programmer"></div>
+        </div>
+        <div class="flex-group">
+            <div class="form-item"><input type="text" name="state" placeholder="State"></div>
+            <div class="form-item"><input type="text" name="rdate" placeholder="Request date/time (MM/DD)"></div>
+            <div class="form-item"><input type="text" name="ddate" placeholder="Due date/time (MM/DD)"></div>
+        </div>
+        <button id="save" class="btn" type="submit">Save</button>
+    </form>
+</script>
+
+<script src="js/TimeLines.js"></script>
 </body>
 </html>
