@@ -4,10 +4,6 @@
     "name": "FocusVision Keyboard Shortcuts for the Decipher platform",
     "description": "This extension provides keyboard shortcuts for navigating around surveys",
     "version": "2016.11.1",
-    "options_ui": {
-      "page": "src/options.html",
-      "chrome_style": true
-    },
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
     "icons": {
@@ -28,18 +24,15 @@
             ],
             "js": [
                 "src/js/jquery-3.1.0.min.js",
+                "src/js/AnswerForMe.js",
                 "src/js/Shortcuts.js",
-                "src/js/AnswerForMe.js"
+                "src/js/keybind.js",
+                "src/js/main.js"
+
             ],
             "run_at": "document_end"
         }
     ],
-    "browser_action": {
-        "default_title": "TimeLines",
-        "default_icon": "src/Deciphericon.png",
-        "default_popup": "src/popup.html"
-    },
 
-
-    "permissions": ["storage","history","tabs"]
+    "permissions": ["storage","history","tabs","bookmarks"]
 }
