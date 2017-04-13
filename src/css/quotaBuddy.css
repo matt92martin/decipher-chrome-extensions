@@ -76,3 +76,6 @@
 .quotaTogglers{
 	padding-left: 10px;
 }
+.highlightEdit{
+	border: 3px solid black !important;
+}

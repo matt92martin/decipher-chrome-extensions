@@ -11,6 +11,10 @@ $(function(){
     else if ($('.devToggle.expanded').length){
         $('.surveyInfo, .survey-info').toggle();
     }
+    else if (sc.url1().indexOf('tab=quota') != -1) {
+        var qb = QuotaBuddy;
+        qb.init();
+    }
 
 
 	function escape() {
@@ -32,8 +36,8 @@ $(function(){
 		else if ( kb.test_keys('shift')) {
             
             if      ( kb.test_keys('right') ) { kb.foundMatch(afm.fillNext.bind(afm)); }
-            else if ( kb.test_keys('up')    ) { kb.foundMatch(afm.fillPage.bind(afm)); }
-            else if ( kb.test_keys('down')  ) { kb.foundMatch(afm.nextPage.bind(afm)); }
+            else if ( kb.test_keys('down')    ) { kb.foundMatch(afm.fillPage.bind(afm)); }
+            else if ( kb.test_keys('up')  ) { kb.foundMatch(afm.nextPage.bind(afm)); }
             
 		}
 		else if (kb.test_keys('ctrl')) {}
