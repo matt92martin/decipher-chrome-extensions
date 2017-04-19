@@ -1,10 +1,13 @@
 $(function(){
 	
-	var kb = KeyBinds;
+	var kb  = KeyBinds;
     var afm = AnswerForMe;
-    var sc = ShortCuts;
+    var sc  = ShortCuts;
+    var sl  = SearchLight;
 
-	
+    sl.init();
+
+
     if (afm.GM_getValue("question")){
         afm.gotoPage();
     }
@@ -22,6 +25,7 @@ $(function(){
 			$("#saveCancel").find('button.secondary').click();
 		}
         else {
+            sl.cancel();
             afm.clearValues();
         }
 	}
@@ -31,7 +35,13 @@ $(function(){
 		if      ( kb.test_keys('esc')) { escape(); }
 		else if ( kb.test_keys('ctrl', 'shift', 'alt')) {}
 		else if ( kb.test_keys('shift', 'alt')) {}
-		else if ( kb.test_keys('ctrl', 'shift')) {}
+		else if ( kb.test_keys('ctrl', 'shift')) {
+
+            if   (kb.test_keys('p') ) {
+                kb.foundMatch( sl.showInput.bind(sl) );
+            }
+
+        }
 		else if ( kb.test_keys('ctrl', 'alt')) {}
 		else if ( kb.test_keys('shift')) {
             
@@ -94,37 +104,3 @@ $(function(){
     
     
 });
-
-/*
-
-
-        
-        document.addEventListener('keydown', function(e) {
-            // pressed alt+g
-            if (e.keyCode == 71 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt g
-                var value = '';
-                clearValues();
-                value = prompt('Which question do I stop at?', 'Q');
-                if (value) {
-                    var d = new Date();
-                    var n = d.getTime();
-                    GM_setValue("time",n);
-                    GM_setValue("question",value);
-                    gotoPage();
-                }
-                else{
-                    return;
-                }
-                
-                
-                else if (e.keyCode == 68 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt d
-                    toggleRandomization();
-                }
-                else if (e.keyCode == 70 && !e.shiftKey && !e.ctrlKey && e.altKey && !e.metaKey) {//alt f
-                    e
-                    url = window.location.href;
-                    url = url + '?&debug=flow';
-                    window.location.href = url;
-                }
-            }, false);
-            */

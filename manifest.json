@@ -13,27 +13,29 @@
         "src/css/quotaBuddy.css"
     ],
 
-    "content_scripts": [
-        {
+    "content_scripts": [{
             "matches": [
                 "https://*.decipherinc.com/*",
                 "http://*.decipherinc.com/*"
             ],
             "css": [
-                "src/css/quotaBuddy.css"
+                "src/css/styles.css"
             ],
             "js": [
                 "src/js/jquery-3.1.0.min.js",
                 "src/js/AnswerForMe.js",
                 "src/js/Shortcuts.js",
                 "src/js/QuotaBuddy.js",
+                "src/js/SearchLight.js",
                 "src/js/keybind.js",
                 "src/js/main.js"
 
             ],
             "run_at": "document_end"
-        }
-    ],
+    }], 
+    "background": {
+        "scripts": ["src/js/background.js"]
+    },
 
     "permissions": ["storage","history","tabs","bookmarks"]
 }
