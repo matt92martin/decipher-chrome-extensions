@@ -166,7 +166,6 @@
                     var code = e.keyCode || e.which;
 
                     if ( code === 40 || code === 38){
-                        e.preventDefault();
                         selectBook(code);
                         return false;
                     } else if ( code === 13){

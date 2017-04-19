@@ -53,7 +53,7 @@
                 this.GM_setValue("time", n);
                 
                 //quit if timed out
-                if (!time || ((n - time) > timeout)){
+                if (!time || ((n - time) > this.timeout)){
                     this.clearValues();
                     return;
                 }
