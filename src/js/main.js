@@ -42,8 +42,8 @@ $(function(){
 		else if ( e.shiftKey && e.altKey ) {}
 		else if ( e.shiftKey ) {
             if      ( kb.test_keys('right') ) { kb.foundMatch(afm.fillNext.bind(afm)); }
-            else if ( kb.test_keys('down')    ) { kb.foundMatch(afm.fillPage.bind(afm)); }
-            else if ( kb.test_keys('up')  ) { kb.foundMatch(afm.nextPage.bind(afm)); }
+            else if ( kb.test_keys('down') ) { kb.foundMatch(afm.fillPage.bind(afm)); }
+            else if ( kb.test_keys('up') ) { kb.foundMatch(afm.nextPage.bind(afm)); }
 		}
 		else if ( e.ctrlKey ) {}
 		else if ( e.altKey ) {
@@ -79,7 +79,7 @@ $(function(){
             // Go to survey upload manager
             else if ( kb.test_keys('u')) { kb.foundMatch(sc.goTO.bind(sc, 'apps/filemanager', '')); }
             // Go to survey version history
-            else if ( kb.test_keys('v')) { kb.foundMatch(sc.goTO.bind(sc, 'admin/vc/list?file=', '/survey.xml')); }
+            else if ( kb.test_keys('v')) { kb.foundMatch(sc.goTO.bind(sc, 'admin/vc/list?file=', '/survey.xml', false)); }
             // Set the survey to flow mode
             else if ( kb.test_keys('f')) { kb.foundMatch(sc.goTO.bind(sc, 'survey', '?&debug=flow')); }
             // Does the survey for you up until the question you enter

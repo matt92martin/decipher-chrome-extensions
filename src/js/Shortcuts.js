@@ -105,11 +105,12 @@
 				return window.location.protocol + '//' + this.url_host() + '/';
 			},
 			
-			goTO: function(front, back) {
+			goTO: function(front, back, leading) {
+				leading = (leading === undefined || leading === true) ? '/' : '';
 				var projectAddress = this.getProject();
 				
 				if (projectAddress) {
-					var url = this.baseURL() + front + projectAddress + back;
+					var url = this.baseURL() + front + leading + projectAddress + back;
 					window.location.href = url;
 				}
 			},
@@ -137,7 +138,7 @@
 					urlback = urlback.split('?')[0];
 					urlback = urlback.split(':')[0];
 					
-					return urlback;
+					return urlback.replace(/^[\/]+|[\/]+$/, '');;
 					
 				} else if (url.match(/(\/admin\/vc\/list|detail\/|admin\/sst\/list)/)) {
 					var url = window.location.href;
@@ -147,8 +148,7 @@
 						var urlback = urlback.substring(0, urlback.lastIndexOf("/"));
 					}
 					
-					//Ensuring that we only have 1 leading "/"
-					return "/" + urlback.replace(/^[\/]+|[\/]+$/, '');
+					return urlback.replace(/^[\/]+|[\/]+$/, '');
 				}
 				
 				return "";
