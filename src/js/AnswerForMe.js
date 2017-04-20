@@ -214,6 +214,7 @@
             
             
             fillNumber: function(amount,range){
+                var _that = this;
                 if (amount){
                     
                     var amountleft = amount;
@@ -270,7 +271,7 @@
                             numbers.val('33').trigger('change');
                         } else {
                             numbers.each(function() {
-                                $(this).val(this.getRandomInt(range[0],range[1])).trigger('change');
+                                $(this).val(_that.getRandomInt(range[0],range[1])).trigger('change');
                             });
                         }
                         return true;

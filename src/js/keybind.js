@@ -17,7 +17,7 @@
 				callback();
 			},
 			
-			// Map keycode to their readablle counterparts
+			// Map keycode to their readable counterparts
 			mapToReadable: function(selkey) {
 				var alias = {
 					//Modifiers

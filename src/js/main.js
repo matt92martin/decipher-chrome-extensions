@@ -52,7 +52,7 @@ $(function(){
 	
 	function keyFunctions(e) {
         
-		if      ( e.keyCode === 27 ) { escape(); }
+		if ( e.keyCode === 27 ) { escape(); }
         if (onPage){
             if      ( e.ctrlKey && e.shiftKey && e.altKey && e.metaKey ) {}
             else if ( e.ctrlKey && e.shiftKey && e.altKey ) {}
