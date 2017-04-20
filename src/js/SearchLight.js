@@ -11,6 +11,7 @@
                 sl.removeClass('sl-hide');
 
                 sl.find('input').val('').focus();
+                slc.find('div').removeClass('sl-hide');
 
                 this.sendFor('bookmarks').then(function(items){
                     var rows = [];

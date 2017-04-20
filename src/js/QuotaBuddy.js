@@ -72,16 +72,12 @@
 			
 			//cancel editing cell
 			escape: function() {
-				if (this.url1().indexOf('tab=quota') != -1) {
-					$("#saveCancel").find('button.secondary').click();
-				}
+				$("#saveCancel").find('button.secondary').click();
 			},
 			
 			//edit quotas
 			edit: function() {
-				if (this.url1().indexOf('tab=quota') != -1) {
-					$("#editQuotas").click();
-				}
+				$("#editQuotas").click();
 			},
             
             
@@ -181,7 +177,8 @@
                 //when tab is pressed move to next input
                 editor.on('keydown', function (e) {
                     var that = $(this);
-                    if (e.keyCode == 9) { //tab
+					var code = e.keyCode || e.which;
+                    if (code === 9) { //tab
                         $('#_save').click();
                         var curindex = parseInt(JSON.parse(localStorage.getItem('quotaIndex')));
                         var nextindex = e.shiftKey ? curindex - 1 : curindex + 1;
