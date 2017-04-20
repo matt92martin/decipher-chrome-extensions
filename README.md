@@ -29,7 +29,6 @@ https://chrome.google.com/webstore/detail/focusvision-keyboard-shor/fkgbkflajagj
 </ul>
 
 ### Quota Shortcuts:
-<br/>
 <ul>
     <li>alt+e = Edit Quota if on the quota page</li>
     <li>tab = Edit the next item when in edit mode</li>
@@ -40,7 +39,6 @@ https://chrome.google.com/webstore/detail/focusvision-keyboard-shor/fkgbkflajagj
 This also adds a menu in the top left of quota pages to help navigate large quota sheets.
 
 ### Global Shortcuts(beta):
-<br/>
 <ul>
     <li>ctrl+shift+p = Enables bookmark search</li>
 </ul>
