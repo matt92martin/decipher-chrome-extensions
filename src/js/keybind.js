@@ -2,8 +2,6 @@
 (function(window, $){
 	
 	function define_keybinds(){
-		// var that = this;
-		// that.opt = typeof( arguments[ 0 ] ) === "object" ? arguments[ 0 ] : {};
 		
 		var Keybinds = {
 			
@@ -11,7 +9,7 @@
 
 			mapKeys: function (e, callback) {
 				this.map[e.keyCode] = e.type === 'keydown';
-				callback();
+				callback(e);
 			},
 			
 			foundMatch: function(callback){

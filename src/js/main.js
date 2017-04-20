@@ -30,28 +30,23 @@ $(function(){
         }
 	}
 	
-	function keyFunctions() {
+	function keyFunctions(e) {
         
 		if      ( kb.test_keys('esc')) { escape(); }
-		else if ( kb.test_keys('ctrl', 'shift', 'alt')) {}
-		else if ( kb.test_keys('shift', 'alt')) {}
-		else if ( kb.test_keys('ctrl', 'shift')) {
-
-            if   (kb.test_keys('p') ) {
-                kb.foundMatch( sl.showInput.bind(sl) );
-            }
-
+		else if ( e.ctrlKey && e.shiftKey && e.altKey && e.metaKey ) {}
+		else if ( e.ctrlKey && e.shiftKey && e.altKey ) {}
+		else if ( e.ctrlKey && e.altKey ) {}
+		else if ( e.ctrlKey && e.shiftKey ) {
+            if   (kb.test_keys('p') ) { kb.foundMatch( sl.showInput.bind(sl) ); }
         }
-		else if ( kb.test_keys('ctrl', 'alt')) {}
-		else if ( kb.test_keys('shift')) {
-            
+		else if ( e.shiftKey && e.altKey ) {}
+		else if ( e.shiftKey ) {
             if      ( kb.test_keys('right') ) { kb.foundMatch(afm.fillNext.bind(afm)); }
             else if ( kb.test_keys('down')    ) { kb.foundMatch(afm.fillPage.bind(afm)); }
             else if ( kb.test_keys('up')  ) { kb.foundMatch(afm.nextPage.bind(afm)); }
-            
 		}
-		else if (kb.test_keys('ctrl')) {}
-		else if (kb.test_keys('alt')) {
+		else if ( e.ctrlKey ) {}
+		else if ( e.altKey ) {
             
             // Straight line a question
             if      ( kb.test_keys('1')) { kb.foundMatch( afm.straightLine.bind(afm, 1) ); }
