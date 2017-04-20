@@ -40,7 +40,7 @@ This also adds a menu in the top left of quota pages to help navigate large quot
 
 ### Global Shortcuts(beta):
 <ul>
-    <li>ctrl+shift+p = Enables bookmark search</li>
+    <li>alt+shift+p = Enables bookmark search</li>
 </ul>
 <br/>
 Limitations:<br/>

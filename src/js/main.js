@@ -4,7 +4,6 @@ $(function(){
     var afm = AnswerForMe;
     var sc  = ShortCuts;
     var sl  = SearchLight;
-
     sl.init();
 
 
@@ -29,6 +28,18 @@ $(function(){
             afm.clearValues();
         }
 	}
+
+    // Attempting to make this more usable outside surveys
+    chrome.runtime.onMessage.addListener(function(msg) {
+        switch(msg.type){
+            case 'search_light': 
+                sl.showInput(); 
+                break;
+            default: 
+                break;
+        }
+    });
+
 	
 	function keyFunctions(e) {
         
@@ -36,9 +47,7 @@ $(function(){
 		else if ( e.ctrlKey && e.shiftKey && e.altKey && e.metaKey ) {}
 		else if ( e.ctrlKey && e.shiftKey && e.altKey ) {}
 		else if ( e.ctrlKey && e.altKey ) {}
-		else if ( e.ctrlKey && e.shiftKey ) {
-            if   (kb.test_keys('p') ) { kb.foundMatch( sl.showInput.bind(sl) ); }
-        }
+		else if ( e.ctrlKey && e.shiftKey ) {}
 		else if ( e.shiftKey && e.altKey ) {}
 		else if ( e.shiftKey ) {
             if      ( kb.test_keys('right') ) { kb.foundMatch(afm.fillNext.bind(afm)); }

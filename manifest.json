@@ -9,15 +9,22 @@
     "icons": {
         "128": "src/Deciphericon.png" 
     },
+    "commands": {
+        "search_light": {
+            "suggested_key": {
+                "default": "Alt+Shift+P",
+                "windows": "Alt+Shift+P",
+                "linux": "Alt+Shift+P"
+            },
+            "description": "Search bookmarks"
+        }
+    },
     "web_accessible_resources": [
         "src/css/quotaBuddy.css"
     ],
 
     "content_scripts": [{
-            "matches": [
-                "https://*.decipherinc.com/*",
-                "http://*.decipherinc.com/*"
-            ],
+            "matches": ["<all_urls>"],
             "css": [
                 "src/css/styles.css"
             ],
