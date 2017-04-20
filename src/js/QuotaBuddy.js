@@ -71,7 +71,7 @@
 			
 			
 			//cancel editing cell
-			escape: function() {
+			cancel: function() {
 				$("#saveCancel").find('button.secondary').click();
 			},
 			
