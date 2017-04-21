@@ -4,29 +4,25 @@
     <meta charset="UTF-8">
     <title>Options</title>
     <link rel="stylesheet" href="css/options.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="form">
-
-            <div class="form-item">
-                <label for="name">Name:</label>
-                <input type="text" id="name">
+    <div class="ui container">
+        <div class="form-container">
+            <h1 class="ui center aligned header">FocusVision Keyboard Shortcuts for Decipher Options</h1>
+            <div class="ui form">
+                <div class="field">
+                    <label>Sites</label>
+                    <textarea id="sites"></textarea>
+                </div>
+                <div class="field">
+                    <button id="save" class="ui primary button">Save</button>
+                </div>
+                <div class="field" id="status"></div>
             </div>
-
-            <div class="form-item">
-                <label for="team">Team:</label>
-                <input type="text" id="team">
-            </div>
-            <div class="form-item">
-                <div id="status"></div>
-            </div>
-            <div class="form-item">
-                <button id="save" class="btn">Save</button>
-            </div>
-
         </div>
     </div>
     <script src="js/options.js"></script>
+
 </body>
 </html>

@@ -44,5 +44,6 @@
         "scripts": ["src/js/background.js"]
     },
 
-    "permissions": ["storage","history","tabs","bookmarks"]
+    "permissions": ["storage","history","tabs","bookmarks"],
+    "options_page": "src/options.html"
 }
