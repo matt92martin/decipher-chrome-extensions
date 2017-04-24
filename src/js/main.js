@@ -1,10 +1,8 @@
 $(function(){
 
-    var kb  = KeyBinds;
-    var sl  = SearchLight;
-    sl.init();
-
     function page(onPage, options){
+
+        console.log(onPage);
 
         var onQuota = (window.location.href.indexOf('tab=quota') !== -1);
 
@@ -12,6 +10,10 @@ $(function(){
             var afm = AnswerForMe;
             var sc  = ShortCuts;
         }
+
+        var kb  = KeyBinds;
+        var sl  = SearchLight;
+        sl.init();
 
         if ( onPage && afm.GM_getValue("question") ){
             afm.gotoPage();
@@ -112,14 +114,15 @@ $(function(){
         document.addEventListener('keyup', function(e){
             kb.mapKeys(e, keyFunctions);
         });
+
     }
     
     function validSite(sites){
         var current_site = window.location.host;
         for (var i=0; i<sites.length; i++){
-            var site = sites[i];
-
-            if ( current_site.indexOf(site) !== -1 ){
+            var site = sites[i].trim();
+            
+            if ( site && current_site.indexOf(site) !== -1 ){
                 return true;
             }
         }
