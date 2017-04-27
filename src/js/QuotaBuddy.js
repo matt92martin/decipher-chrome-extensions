@@ -107,7 +107,7 @@
 				$('#showAll').on('click', _this.HideShowAll.bind(_this, ':hidden'));
 				this.injectJs(_this.gotoquota);
 				
-				var qBuddy     = $('div#quotaBuddy'),
+				var qBuddy = $('div#quotaBuddy'),
                 qBuddyTdiv = $('#qbTable'),
                 qBuddyT    = qBuddyTdiv.find('table'),
                 qTables    = $('table.nquota'),
@@ -175,19 +175,20 @@
                 
                 var editor = $("#_editor");
                 //when tab is pressed move to next input
-                editor.on('keydown', function (e) {
-                    var that = $(this);
+				editor.on('keydown', function (e) {
 					var code = e.keyCode || e.which;
-                    if (code === 9) { //tab
-                        $('#_save').click();
-                        var curindex = parseInt(JSON.parse(localStorage.getItem('quotaIndex')));
-                        var nextindex = e.shiftKey ? curindex - 1 : curindex + 1;
+					if (code === 9) { //tab
+						$('#_save').get(0).click();
 
-                        $('tbody td.editable').removeClass('highlightEdit');
-                        $('[tabindex=' + nextindex + ']').addClass('highlightEdit').focus().click();
-                        e.preventDefault();
-                    }
-                });
+						var curindex = parseInt(JSON.parse(localStorage.getItem('quotaIndex')));
+						var nextindex = e.shiftKey ? curindex - 1 : curindex + 1;
+
+						var nextItem = $('[tabindex=' + nextindex + ']');
+						_this.highlight(nextItem);
+						nextItem.click();
+						e.preventDefault();
+					}
+				});
                 
                 
                 // set up tab indexes
@@ -196,12 +197,21 @@
                 });
                 
                 $("tbody td.editable").on('click', function(){
-                    $(this).addClass('highlightEdit');
-                    localStorage.setItem( 'quotaIndex', JSON.stringify($(this).attr('tabindex')) );
-                    
-                    setTimeout( function(){ $('#_editor').focus() }, 50);
+                    _this.highlight($(this));
                 });
-            }
+            },
+
+			highlight: function(el){
+				var editor = $("#_editor");
+
+                $('tbody td.editable').removeClass('highlightEdit');
+				el.addClass('highlightEdit');
+				localStorage.setItem( 'quotaIndex', JSON.stringify(el.attr('tabindex')) );
+
+				setTimeout( function(){ 
+					editor.focus().select(); 
+				}, 50);
+			}
             
             
         };
