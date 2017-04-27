@@ -35,6 +35,11 @@
 				}
 			},
 			
+			getState: function(){
+				var state = $('input[name="state"]').val();
+				prompt('', location.protocol + '//' + location.host + location.pathname + '?state=' + state);
+				return true;
+			},
 			
 			
 			HideShowAll: function(type) {

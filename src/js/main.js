@@ -56,7 +56,9 @@ $(function(){
                 if      ( e.ctrlKey && e.shiftKey && e.altKey && e.metaKey ) {}
                 else if ( e.ctrlKey && e.shiftKey && e.altKey ) {}
                 else if ( e.ctrlKey && e.altKey ) {}
-                else if ( e.ctrlKey && e.shiftKey ) {}
+                else if ( e.ctrlKey && e.shiftKey ) {
+                    if      ( kb.test_keys('s') ) { kb.foundMatch( sc.getState.bind(sc) ); }
+                }
                 else if ( e.shiftKey && e.altKey ) {}
                 else if ( e.shiftKey ) {
                     if      ( kb.test_keys('right') ) { kb.foundMatch(afm.fillNext.bind(afm)); }
