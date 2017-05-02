@@ -56,10 +56,10 @@ $(function(){
                 if      ( e.ctrlKey && e.shiftKey && e.altKey && e.metaKey ) {}
                 else if ( e.ctrlKey && e.shiftKey && e.altKey ) {}
                 else if ( e.ctrlKey && e.altKey ) {}
-                else if ( e.ctrlKey && e.shiftKey ) {
+                else if ( e.ctrlKey && e.shiftKey ) {}
+                else if ( e.shiftKey && e.altKey ) {
                     if      ( kb.test_keys('s') ) { kb.foundMatch( sc.getState.bind(sc) ); }
                 }
-                else if ( e.shiftKey && e.altKey ) {}
                 else if ( e.shiftKey ) {
                     if      ( kb.test_keys('right') ) { kb.foundMatch(afm.fillNext.bind(afm)); }
                     else if ( kb.test_keys('down') ) { kb.foundMatch(afm.fillPage.bind(afm)); }
@@ -95,11 +95,13 @@ $(function(){
                     // Go to survey quota page
                     else if ( kb.test_keys('q')) { kb.foundMatch(sc.goTO.bind(sc, 'rep', ':dashboard?tab=quota&split=none')); }
                     // Go to survey sst page
-                    else if ( kb.test_keys('w')) { kb.foundMatch(sc.goTO.bind(sc, 'admin/sst/list?survey=', '')); }
+                    else if ( kb.test_keys('w')) { kb.foundMatch(sc.goTO.bind(sc, 'admin/sst/list?survey=', '', false)); }
                     // Go to survey upload manager
                     else if ( kb.test_keys('u')) { kb.foundMatch(sc.goTO.bind(sc, 'apps/filemanager', '')); }
                     // Go to survey version history
                     else if ( kb.test_keys('v')) { kb.foundMatch(sc.goTO.bind(sc, 'admin/vc/list?file=', '/survey.xml', false)); }
+                    // Go to crosstabs
+                    else if ( kb.test_keys('c')) { kb.foundMatch(sc.goTO.bind(sc, 'apps/report', '')); }
                     // Set the survey to flow mode
                     else if ( kb.test_keys('f')) { kb.foundMatch(sc.goTO.bind(sc, 'survey', '?&debug=flow')); }
                     // Does the survey for you up until the question you enter
