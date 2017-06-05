@@ -120,18 +120,34 @@
                 reset || (reset = false);
 
                 var move = (code === 40) ? 1 : -1;
+                var slcd_container = $('#sl-list-container')
                 var slcd = $('#sl-list-container').find('div');
                 var slcds = slcd.not('.sl-hide');
                 var selected = slcd.filter('.selected');
-
                 var current = slcds.index(selected);
-
+                
                 if (current === -1 || reset){
+                    
                     slcd.removeClass('selected');
                     slcds.eq(0).addClass('selected');
+                    
                 } else {
                     selected.removeClass('selected');
-                    slcds.eq(move + current).addClass('selected');
+                    
+                    var idx = move + current;
+                    if ( idx == -1 ){
+                        idx = slcds.length - 1;
+                    }else if ( idx > (slcds.length - 1) ){
+                        idx = 0;
+                    }
+                    
+                    var newSelected = slcds.eq(idx);
+                    newSelected.addClass('selected');
+
+                    slcd_container.animate({
+                        scrollTop: newSelected.offset().top - slcd_container.offset().top + slcd_container.scrollTop()
+                    }, 0);
+                    
                 }
 
             },

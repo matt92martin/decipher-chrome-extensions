@@ -13,6 +13,9 @@
 			url_host: function(){
 				return window.location.host;
 			},
+			url_no_host: function(){
+				return window.location.pathname + window.location.search;				
+			},
 			
 			injectJs: function(srcFile) {
 				var src = document.createElement('script');
@@ -70,14 +73,14 @@
 			
 			//cancel editing cell
 			escape: function() {
-				if (this.url1().indexOf('tab=quota') != -1) {
+				if (this.url_no_host().indexOf('tab=quota') != -1) {
 					$("#saveCancel").find('button.secondary').click();
 				}
 			},
 			
 			//edit quotas
 			edit: function() {
-				if (this.url1().indexOf('tab=quota') != -1) {
+				if (this.url_no_host().indexOf('tab=quota') != -1) {
 					$("#editQuotas").click();
 				}
 			},
@@ -135,9 +138,9 @@
 			},
 			
 			getProject: function() {
-				var url = window.location.href;
+				var url = this.url_no_host();
 				
-				if (url.match(/(takesurvey\/|survey\/|report\/|rep\/|filemanager\/)/)) {
+				if ( url.match(/(takesurvey\/|survey\/|report\/|rep\/|filemanager\/)/) ) {
 					url     = window.location.protocol + '//' + window.location.host + window.location.pathname;
 					urlback = url.split(/\/filemanager|\/report|\/rep|\/survey|\/takesurvey/)[1];
 					urlback = urlback.split('?')[0];
@@ -145,12 +148,12 @@
 					
 					return urlback.replace(/^[\/]+|[\/]+$/, '');;
 					
-				} else if (url.match(/(\/admin\/vc\/list|detail\/|admin\/sst\/list)/)) {
+				} else if ( url.match(/(\/admin\/vc\/list|detail\/|admin\/sst\/list)/) ) {
 					var url = window.location.href;
 					urlback = url.split(/file\=|survey\=|\/detail/)[1];
 					
-					if (url.match(/(\/admin\/vc\/list)/)) {
-						var urlback = urlback.substring(0, urlback.lastIndexOf("/"));
+					if ( url.match(/(\/admin\/vc\/list)/) ) {
+						var urlback = urlback.substring( 0, urlback.lastIndexOf("/") );
 					}
 					
 					return urlback.replace(/^[\/]+|[\/]+$/, '');

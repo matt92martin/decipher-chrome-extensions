@@ -22,6 +22,7 @@ https://chrome.google.com/webstore/detail/focusvision-keyboard-shor/fkgbkflajagj
     <li>alt+v = Go to the version control page</li>
     <li>alt+d = Disable randomization on the current page</li>
     <li>alt+u = Go to survey upload manager</li>
+    <li>alt+c = Go to Crosstabs</li>
     <li>alt+f = Put the survey in flow mode</li>
     <li>alt+(1-9) = Will Straighline the given column number for 2d radio questions</li>
     <li>shift+Up Arrow = Will click the continue button without answering the current page</li>

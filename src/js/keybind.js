@@ -6,9 +6,15 @@
 		var Keybinds = {
 			
 			map: {},
+			interv: undefined,
 
 			mapKeys: function (e, callback) {
+				clearTimeout(this.interv);
+
 				this.map[e.keyCode] = e.type === 'keydown';
+				this.interv = setTimeout(() => {
+					this.map = {};
+				}, 1000);
 				callback(e);
 			},
 			
