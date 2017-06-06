@@ -101,12 +101,6 @@
                     this.clearValues();
                     return;
                 }
-                // $(document).on('keydown',function(e) {
-                //     if (e.keyCode == 27) {
-                //         this.clearValues();
-                //         return;
-                //     }
-                // });
                 
                 this.fillNext();
                 
@@ -322,45 +316,49 @@
                 var _this = this;
                 var tableheaders = $('.col-legend, .survey-q-grid-collegend');
                 
-                var tr = $(".even:has('input:radio'), .odd:has('input:radio')");
-                tr.find("input:radio").prop('checked', false).change();
+                var ans = $('.answers');
                 
-                if (tableheaders.length){
-                
-                    var badheaders = tableheaders.has("span:contains('TERM')");
-                    badheaders = badheaders.map(function(){ 
-                        return tableheaders.index($(this)); 
-                    });
+                ans.each(function(){
+                    var tr = $(this).find(".even:has('input:radio'), .odd:has('input:radio')");
+                    tr.find("input:radio").prop('checked', false).change();
                     
+                    if (tableheaders.length){
                     
-                    tr.each(function(){
+                        var badheaders = tableheaders.has("span:contains('TERM')");
+                        badheaders = badheaders.map(function(){ 
+                            return tableheaders.index($(this)); 
+                        });
                         
-                        _this.fillOE($(this));
-                        var radio = $(this).find("input:radio");
-                        if (badheaders.length && (badheaders.length != radio.length)){
-                            radio = $.grep(radio, function(n, i) {
-                                return $.inArray(i, badheaders) == -1;
-                            });
+                        
+                        tr.each(function(){
+                            
+                            _this.fillOE($(this));
+                            var radio = $(this).find("input:radio");
+                            if (badheaders.length && (badheaders.length != radio.length)){
+                                radio = $.grep(radio, function(n, i) {
+                                    return $.inArray(i, badheaders) == -1;
+                                });
+                            }
+                            
+                            radio = radio.eq(Math.floor(Math.random()*radio.length));
+                            radio.siblings('.fir-icon').length ? radio.siblings('.fir-icon').click() : radio.click();
+                            
+                        });
+                    } else{
+                        
+                        var allterms = tr.has("span:contains('TERM')").not(tr.has("input:text"));
+                        var notterms = allterms.has("span[title*='not']");
+                        var noterms = tr.not(tr.has("span:contains('TERM')")).not(tr.has("input:text"));
+                        var rows = noterms;
+                        if ( notterms.length ){
+                            rows = notterms;
                         }
-                        
-                        radio = radio.eq(Math.floor(Math.random()*radio.length));
-                        radio.siblings('.fir-icon').length ? radio.siblings('.fir-icon').click() : radio.click();
-                        
-                    });
-                } else{
-                    
-                    var allterms = tr.has("span:contains('TERM')").not(tr.has("input:text"));
-                    var notterms = allterms.has("span[title*='not']");
-                    var noterms = tr.not(tr.has("span:contains('TERM')")).not(tr.has("input:text"));
-                    var rows = noterms;
-                    if ( notterms.length ){
-                        rows = notterms;
+                        if ( rows.length ) {
+                            var radio = rows.eq(Math.floor(Math.random()*rows.length)).find('input:radio');
+                            radio.siblings('.fir-icon').length ? radio.siblings('.fir-icon').click() : radio.click();
+                        }
                     }
-                    if ( rows.length ) {
-                        var radio = rows.eq(Math.floor(Math.random()*rows.length)).find('input:radio');
-                        radio.siblings('.fir-icon').length ? radio.siblings('.fir-icon').click() : radio.click();
-                    }
-                }
+                });
             },
             
             shuffleArray: function(arr){
@@ -379,66 +377,67 @@
                 if (!atmost){
                     atmost=atleast;
                 }
-                
-                var tr = $(".answers .even, .answers .odd");
-                tr.find("input:checkbox:checked").click();
-                
-                var allCheckbox = tr.has("input:checkbox");
-                
-                var allterms = allCheckbox.has("span:contains('TERM')");
-                var notTerms = allterms.has("span[title*='not']");
-                var notTermsnotNoAnswers = notTerms.not(notTerms.find(".naRow, .no-answer"));
-                var trs = allCheckbox.not(allCheckbox.has("span:contains('TERM')"));
-                var notNoAnswers = trs.not(allCheckbox.has(".naRow, .no-answer"));
-                
-                
-                if (notTermsnotNoAnswers.length){
-                    trs = notTermsnotNoAnswers;
-                }else if (notTerms.length){
-                    trs = notTerms;
-                }else{
-                    trs = notNoAnswers;
-                }
-                
-                
-                notexclusive = trs.has('input:checkbox:not(.exclusive)');
-                
-                if (notexclusive.length){
-                    trs = notexclusive;
-                }
-                
-                
-                var tableheaders = $('.survey-q-grid-collegend, .col-legend');
-                if (tableheaders.length){
+                var ans = $('.answers');
+                ans.each(function(){
+                    var tr = $(this).find(".even, .odd");
+                    tr.find("input:checkbox:checked").click();
                     
-                    if ( $("h3.survey-q-error-text:contains('in this column')").length || ( ( $('.col-legend.hasError').length != $('.col-legend').length ) && $('.col-legend.hasError').length ) ){
-                        for (var i=0;i<atmost;i++){
+                    var allCheckbox = tr.has("input:checkbox");
+                    
+                    var allterms = allCheckbox.has("span:contains('TERM')");
+                    var notTerms = allterms.has("span[title*='not']");
+                    var notTermsnotNoAnswers = notTerms.not(notTerms.find(".naRow, .no-answer"));
+                    var trs = allCheckbox.not(allCheckbox.has("span:contains('TERM')"));
+                    var notNoAnswers = trs.not(allCheckbox.has(".naRow, .no-answer"));
+                    
+                    
+                    if (notTermsnotNoAnswers.length){
+                        trs = notTermsnotNoAnswers;
+                    }else if (notTerms.length){
+                        trs = notTerms;
+                    }else{
+                        trs = notNoAnswers;
+                    }
+                    
+                    
+                    notexclusive = trs.has('input:checkbox:not(.exclusive)');
+                    
+                    if (notexclusive.length){
+                        trs = notexclusive;
+                    }
+                    
+                    
+                    var tableheaders = $('.survey-q-grid-collegend, .col-legend');
+                    if (tableheaders.length){
+                        
+                        if ( $("h3.survey-q-error-text:contains('in this column')").length || ( ( $('.col-legend.hasError').length != $('.col-legend').length ) && $('.col-legend.hasError').length ) ){
+                            for (var i=0;i<atmost;i++){
+                                trs.eq(i).each(function(){
+                                    _this.fillOE($(this));
+                                    $(this).find("input:checkbox").click();
+                                });
+                            }
+                        }else{
+                            trs.each(function(){
+                                _this.fillOE($(this));
+                                for (var i=0; i<atmost; i++){
+                                    $(this).find("input:checkbox").eq(i).click();
+                                }
+                            });
+                        }
+                        
+                    }
+                    else{
+                        trs = _this.shuffleArray(trs);
+                        for (var i=0; i<atmost; i++){
                             trs.eq(i).each(function(){
+                                
                                 _this.fillOE($(this));
                                 $(this).find("input:checkbox").click();
                             });
                         }
-                    }else{
-                        trs.each(function(){
-                            _this.fillOE($(this));
-                            for (var i=0; i<atmost; i++){
-                                $(this).find("input:checkbox").eq(i).click();
-                            }
-                        });
                     }
-                    
-                }
-                else{
-                    trs = this.shuffleArray(trs);
-                    for (var i=0; i<atmost; i++){
-                        trs.eq(i).each(function(){
-                            
-                            _this.fillOE($(this));
-                            $(this).find("input:checkbox").click();
-                        });
-                    }
-                }
-                
+                });
             },
             
             fillSelect: function(maxranks,unique){
@@ -447,19 +446,23 @@
                     for (var i=0;i<=maxranks;i++){
                         $('select').eq(i).val(i);
                     }
+
                 } else if (unique == 'cols'){
                     
                     for (var i=0;i<=$('select').length;i++){
                         $('select').eq(i).val(i);
                     }
+
                 } else{
                     
                     $('select').val($('select option').eq(1).val());
+
                 }
             },
             
             
             fillNext: function(){
+
                 this.fillPage();
                 this.nextPage();
                 
@@ -474,7 +477,6 @@
             
             straightLine: function(index){
                 var radio;
-                console.log(index);
                 index -= 1;
                 $('.even, .odd').each(function(){
                     radio = $(this).find('input:radio:eq(' + index + ')');
