@@ -2,6 +2,8 @@ $(function(){
 
     function page(onPage, options){
 
+        console.log('Valid Page');
+
         var onQuota = (window.location.href.indexOf('tab=quota') !== -1);
 
         if (onPage){

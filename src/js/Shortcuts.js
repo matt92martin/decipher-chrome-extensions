@@ -149,14 +149,23 @@
 					return urlback.replace(/^[\/]+|[\/]+$/, '');;
 					
 				} else if ( url.match(/(\/admin\/vc\/list|detail\/|admin\/sst\/list)/) ) {
-					var url = window.location.href;
+					url = window.location.href;
 					urlback = url.split(/file\=|survey\=|\/detail/)[1];
 					
 					if ( url.match(/(\/admin\/vc\/list)/) ) {
-						var urlback = urlback.substring( 0, urlback.lastIndexOf("/") );
+						urlback = urlback.substring( 0, urlback.lastIndexOf("/") );
 					}
 					
 					return urlback.replace(/^[\/]+|[\/]+$/, '');
+
+				} else if ( window.location.href.match( 'projects\/detail' ) ){
+					url = window.location.hash;
+					urlback = url.split(/projects\/detail/)[1];
+					urlback = urlback.split('?')[0];
+					urlback = urlback.split(':')[0];
+
+					return urlback.replace(/^[\/]+|[\/]+$/, '');
+
 				}
 				
 				return "";
