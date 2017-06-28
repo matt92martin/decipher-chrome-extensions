@@ -19,12 +19,12 @@ chrome.runtime.onMessage.addListener(function(msg, sender, handler) {
     return true;
 });
 
+
 chrome.commands.onCommand.addListener(function(command){
+
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-        chrome.tabs.sendMessage(tabs[0].id, {type: command}, function(response) {
-        });  
+        chrome.tabs.sendMessage(tabs[0].id, {type: command}, function(response) { });  
     });
+    
 });
-
-
 

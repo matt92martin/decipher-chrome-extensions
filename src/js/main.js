@@ -2,11 +2,9 @@ $(function(){
 
     function page(onPage, options){
 
-        console.log('Valid Page');
+        var onQuota = ( window.location.href.indexOf('tab=quota') !== -1 );
 
-        var onQuota = (window.location.href.indexOf('tab=quota') !== -1);
-
-        if (onPage){
+        if ( onPage ){
             var afm = AnswerForMe;
             var sc  = ShortCuts;
         }
@@ -15,13 +13,13 @@ $(function(){
         var sl  = SearchLight;
         sl.init();
 
-        if ( onPage && afm.GM_getValue("question") ){
+        if ( onPage && afm.GM_getValue( "question" ) ){
             afm.gotoPage();
 
-        } else if (onPage && $('.devToggle.expanded').length){
-            $('.surveyInfo, .survey-info').toggle();
+        } else if ( onPage && $( '.devToggle.expanded' ).length ){
+            $( '.surveyInfo, .survey-info' ).toggle();
 
-        } else if (onQuota) {
+        } else if ( onQuota ) {
             var qb = QuotaBuddy;
             qb.init();
 
@@ -29,10 +27,10 @@ $(function(){
 
 
         function escape() {
-            if (onQuota) {
+            if ( onQuota ) {
                 qb.cancel()
 
-            } else if (onPage){
+            } else if ( onPage ){
                 sl.cancel();
                 afm.clearValues();
 
@@ -42,7 +40,7 @@ $(function(){
             }
         }
 
-        chrome.runtime.onMessage.addListener(function(msg) {
+        chrome.runtime.onMessage.addListener( function( msg ) {
             if ( msg.type === 'search_light' ){
                 sl.showInput();
             }

@@ -276,12 +276,12 @@
             
             // todo: test float
             fillFloat: function(){
-                var float = $(".float tr:has(input:text)");
+                var float = $(".float input:text");
                 
                 if (!float.length){
                     return false;
                 }
-                float.find(".element input:text").val(10).trigger('change');    
+                float.val(10).trigger('change');    
             },
             
             

@@ -27,6 +27,7 @@ https://chrome.google.com/webstore/detail/focusvision-keyboard-shor/fkgbkflajagj
     <li>alt+(1-9) = Will Straighline the given column number for 2d radio questions</li>
     <li>shift+Up Arrow = Will click the continue button without answering the current page</li>
     <li>shift+Down Arrow = Will fill the current page with answers without clicking the continue button</li>
+    <li>shift+alt+s = Opens a prompt with the current state link</li>
 </ul>
 
 ### Quota Shortcuts:
