@@ -335,9 +335,9 @@
                             _this.fillOE($(this));
                             var radio = $(this).find("input:radio");
                             if (badheaders.length && (badheaders.length != radio.length)){
-                                radio = $.grep(radio, function(n, i) {
+                                radio = $($.grep(radio, function(n, i) {
                                     return $.inArray(i, badheaders) == -1;
-                                });
+                                }));
                             }
                             
                             radio = radio.eq(Math.floor(Math.random()*radio.length));
