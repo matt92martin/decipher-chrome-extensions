@@ -18,9 +18,22 @@
 				callback(e);
 			},
 			
-			foundMatch: function(callback){
+			foundMatch: function(callback, condition){
 				event.preventDefault();
-				callback();
+				condition = ( condition === undefined ) ? true : condition;
+
+				if ( typeof(condition) === 'array' ){
+					for (var cond of condition) {
+						if ( cond === false ){
+							condition = false;
+							break;
+						}
+					}
+				}
+
+				if ( !!condition ){
+					callback();
+				}
 			},
 			
 			// Map keycode to their readable counterparts

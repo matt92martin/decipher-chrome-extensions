@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, handler) {
     } else if ( msg.type === 'sites' ){
 
         chrome.storage.sync.get({
-            sites: ['decipherinc.com', 'focusvision.com']
+            sites: ['v2.decipherinc.com']
         }, function(items) {
             handler( { type: 'sites', payload: items })  
         });

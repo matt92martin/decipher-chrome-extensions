@@ -122,7 +122,7 @@
             },
             
             fillPage: function(){
-                //Only fill dev questions if there is a term
+                // Only fill dev questions if there is a term
                 if ($(".devContainer:has(div.surveyQuestion, div.question)").length){
                     // todo: check if selection is a term before finding something new
                     if ($(".even, .odd").has("span:contains('TERM')").length){
