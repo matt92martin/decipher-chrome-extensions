@@ -1,3 +1,4 @@
+var defaultSite = 'v2.decipherinc.com';
 
 chrome.runtime.onMessage.addListener(function(msg, sender, handler) {
 
@@ -10,8 +11,14 @@ chrome.runtime.onMessage.addListener(function(msg, sender, handler) {
     } else if ( msg.type === 'sites' ){
 
         chrome.storage.sync.get({
-            sites: ['v2.decipherinc.com']
-        }, function(items) {
+            sites: [defaultSite]
+        }, 
+        function(items) {
+
+            if ( items.sites.indexOf( defaultSite ) == -1 ){
+                items.sites.push( defaultSite );
+            }
+
             handler( { type: 'sites', payload: items })  
         });
         
