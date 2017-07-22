@@ -86,22 +86,27 @@
                 var _this = this;
 				
                 var quotaBuddyHtml = `
-                <div id="quotaBuddy">
-                <div id="qbHead">
-                <div id="qbSearch"><input type="text" name="quotaLU" placeholder="Quota Buddy" /></div>
-                <div class="spQB">
-                <button id="hideAll" class="spQBa qbred">-</button>
-                <button id="showAll" class="spQBa qbgreen">+</button>
-                </div>
-                </div>
-                <div class="clear"></div>
-                <div id="qbTable">
-                <table></table>
-                </div>
-                </div>
-				<div id="toggleQuotabuddy" class="qbshow">&gt;</div>`;
-                
-				$(quotaBuddyHtml).insertAfter('#fwheader');
+                <div id="quotaBuddy" class="qbhide">
+					<div id="qbHead">
+						<div id="qbSearch"><input type="text" name="quotaLU" placeholder="Search Quotas ..." /></div>
+						<div class="spQB">
+							<button id="hideAll" class="spQBa qbred">-</button>
+							<button id="showAll" class="spQBa qbgreen">+</button>
+							<button id="closeQB" class="spQBa qbgrey">&lt;</button>
+						</div>
+					</div>
+					<div id="qbTable">
+						<table></table>
+					</div>
+				</div>
+				<div id="qbtoggle" class="qbhide">&gt;</div>
+				`;
+
+				$('#main').prepend(quotaBuddyHtml);
+				$('#closeQB, #qbtoggle').on('click', function(){
+					$('#quotaBuddy').toggleClass('qbhide');
+					$('#qbtoggle').toggleClass('qbhide');
+				});
 				
 				$('#hideAll').on('click', _this.HideShowAll.bind(_this, ':visible'));
 				$('#showAll').on('click', _this.HideShowAll.bind(_this, ':hidden'));
@@ -110,40 +115,8 @@
 				var qBuddy = $('div#quotaBuddy'),
                 qBuddyTdiv = $('#qbTable'),
                 qBuddyT    = qBuddyTdiv.find('table'),
-                qTables    = $('table.nquota'),
-                tabContent = document.getElementById("tab-content").getBoundingClientRect(),
-                qWidth     = (tabContent.left - 10);
+                qTables    = $('table.nquota');	
 				
-				qBuddy.css({
-					'position': 'absolute',
-					'height'  : ($(window).height() - 33) + "px",
-					'width'   : qWidth + "px"
-				});
-				qBuddyTdiv.css({'height': ($(window).height() - 58) + "px"});
-				
-				
-				$('#toggleQuotabuddy').on('click', function () {
-					var togQB = $(this);
-					
-					if (togQB.hasClass('qbshow')) {
-						qBuddy.hide();
-						togQB.hide();
-						togQB.text('>');
-						togQB.css({
-							'opacity': 0.5,
-							'left'   : 0
-						});
-						togQB.show('slide');
-						togQB.toggleClass('qbshow');
-						
-					} else {
-						togQB.css({'left': qWidth});
-						togQB.toggleClass('qbshow');
-						togQB.text('<');
-						qBuddy.show();
-						
-					}
-				}).trigger('click');
 				
 				var quotaSheets = [];
 				qTables.each(function () {
@@ -154,15 +127,14 @@
 					var _thisText   = $this.find('.nquotaDescription').text();
 					
 					var rowtext = `
-                    <tr>
-                    <td class="quotaTogglers">
-                    <a  href="javascript:void(0)" class="`+ _thisHidDiv +`" data-goto="`+ _thisid +`" onclick="gotoquota(this)"
-                    >`+ _thisText +`</a>
-                    </td>
-					</tr>`;
+						<tr>
+							<td class="quotaTogglers">
+								<a  href="javascript:void(0)" class="${_thisHidDiv}" data-goto="${_thisid}" onclick="gotoquota(this)">${_thisText}</a>
+							</td>
+						</tr>`;
                     
 					if (quotaSheets.indexOf(_thisSheet) == -1) {
-						var sheetText = `<tr class="quotaTogglersHead"><td>` + _thisSheet.replace(/^sheet: /, '') + `</td></tr>`;
+						var sheetText = `<tr class="quotaTogglersHead"><td><h5>${_thisSheet.replace(/^sheet: /, '')}</h5></td></tr>`;
 						quotaSheets.push(_thisSheet);
 						rowtext = sheetText + rowtext;
 					}

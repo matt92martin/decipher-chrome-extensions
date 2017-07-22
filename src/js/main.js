@@ -21,6 +21,7 @@ $(function(){
             $( '.surveyInfo, .survey-info' ).toggle();
 
         } else if ( onQuota ) {
+            $( 'body' ).addClass( 'quota-page' );
             var qb = QuotaBuddy;
             qb.init();
 

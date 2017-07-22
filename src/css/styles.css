@@ -1,13 +1,53 @@
+/******************START QB**************/
+
+.quota-page #main{
+	display: flex;
+}
+
+.quota-page #stage {
+	flex: 1 75%;
+	transition: all 1000ms linear;
+	overflow-y: scroll;
+}
 #quotaBuddy{
+	font-family: TitilliumText25L400wt, helvetica, arial, sans-serif;
     background-color: #F1F1F1;
     border-right: 3px solid #DEDEDE;
-  	transition: all 2s linear;
+  	transition: all 0.3s linear;
   	box-sizing: border-box;
   	z-index: 2;
+	flex: 0 24%;
+	height: 100%;
+	max-height: 100%;
+}
+#quotaBuddy.qbhide{
+	flex: 0.000001;	
+}
+
+#quotaBuddy.qbhide *{
+	display: none;
+}
+#qbtoggle{
+	height: 40px;
+	width: 10px;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #898989;
+	color: white;
+	font-size: 12px;
+	line-height: 40px;
+	cursor: pointer;
+	margin-left: -3px;
+    z-index: 10;
+	display: none;
+}
+#qbtoggle.qbhide{
+	display: block;
 }
 #quotaBuddy div#qbTable{
 	overflow-y: scroll;
 	overflow-x: hidden;
+	height: calc(100% - 60px);
 }
 #quotaBuddy div#qbTable td{
 	height: 15px;
@@ -15,67 +55,67 @@
 #quotaBuddy div#qbHead{
 	font-weight: bold;
 	border-bottom: 3px solid #DEDEDE;
-	height: 30px;
-}
-#quotaBuddy div#qbHead span{
-	float: right;
-	padding-left: 10px;
+	height: 55px;
 }
 .spQB{
-	width: 25%;
-	height: 27px;
+	width: 100%;
+	height: 25px;
 	padding: 0px;
 	vertical-align: middle;
-	float: right;
 	overflow: hidden;
 }
 .spQBa{
 	float:left;
-	width: 50%;
+	width: 33.33333%;
 	height: 100%;
 	color: white;
 	margin: 0px;
 	padding: 0px;
 	border: none;
+	font-weight: bold;
+	font-size: 16px;
 }
-.qbred{background-color: #ff4d4d;}
-.qbgreen{background-color: #4dff4d;}
+.qbred{background-color: #db3236;}
+.qbgrey{background-color: #898989;}
+.qbgreen{background-color: #3cba54;}
 #qbSearch{
-	width: 75%;
-	float: left;
+	width: 100%;
 }
 #qbSearch input{
 	width: 100%;
 	border: none;
 	border-radius: 0px;
 }
-.clear{
-	clear: both;
-}
-#toggleQuotabuddy{
-	position: absolute;
-	width: 20px;
-	height: 20px;
-	background-color: gray;
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-}
 .qbshow{
 	display: block;
 }
-.qbhide{
-	display: none;
-}
 .quotaTogglersHead{
-	font-weight: bold;
-	text-decoration: underline;
-}
-.quotaTogglers{
 	padding-left: 10px;
 }
+.quotaTogglersHead td{
+	padding-left: 10px;
+}
+
+.quotaTogglersHead td h5{
+	font-weight: bold;
+}
+.quotaTogglers{
+	padding-left: 20px;
+}
+
+
+
+/*****************END QB*******************/
+
+
+
+
+
+
+
+
+
+
 .highlightEdit{
 	border: 3px solid black !important;
 }
