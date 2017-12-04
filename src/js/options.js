@@ -6,7 +6,7 @@ function save_options() {
     sites.push( defaultSite );
   }
 
-  chrome.storage.sync.set({
+  browser.storage.sync.set({
     sites: sites,
   }, 
   function() {
@@ -23,7 +23,7 @@ function save_options() {
 
 function restore_options(){
 
-  chrome.storage.sync.get({
+  browser.storage.sync.get({
     sites: [ defaultSite ]
   }, 
   function(items) {

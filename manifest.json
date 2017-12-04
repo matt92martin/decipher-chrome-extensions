@@ -3,9 +3,8 @@
 
     "name": "FocusVision Keyboard Shortcuts for Decipher",
     "description": "This extension provides keyboard shortcuts for navigating around surveys",
-    "version": "2.1.5",
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-
+    "version": "2.1.8",
+    "author": "matt92martin",
     "icons": {
         "128": "src/Deciphericon.png" 
     },
@@ -19,26 +18,27 @@
             "description": "Search bookmarks"
         }
     },
-    "web_accessible_resources": [
-        "src/css/quotaBuddy.css"
-    ],
-
+    "applications": {
+        "gecko": {
+            "id": "{2233c1e5-d293-4035-bf49-b03293ff63d5}"
+        }
+    },
     "content_scripts": [{
-            "matches": ["<all_urls>"],
-            "css": [
-                "src/css/styles.css"
-            ],
-            "js": [
-                "src/js/jquery-3.1.0.min.js",
-                "src/js/AnswerForMe.js",
-                "src/js/Shortcuts.js",
-                "src/js/QuotaBuddy.js",
-                "src/js/SearchLight.js",
-                "src/js/keybind.js",
-                "src/js/main.js"
+        "matches": ["<all_urls>"],
+        "css": [
+            "src/css/styles.css"
+        ],
+        "js": [
+            "src/js/jquery-3.1.0.min.js",
+            "src/js/AnswerForMe.js",
+            "src/js/Shortcuts.js",
+            "src/js/QuotaBuddy.js",
+            "src/js/SearchLight.js",
+            "src/js/keybind.js",
+            "src/js/main.js"
 
-            ],
-            "run_at": "document_end"
+        ],
+        "run_at": "document_end"
     }], 
     "background": {
         "scripts": ["src/js/background.js"]
@@ -48,5 +48,7 @@
     },
 
     "permissions": ["storage","history","tabs","bookmarks"],
-    "options_page": "src/options.html"
+    "options_ui": {
+        "page": "src/options.html"
+    }
 }

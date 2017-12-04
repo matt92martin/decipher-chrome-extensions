@@ -18,9 +18,10 @@
 				callback(e);
 			},
 			
-			foundMatch: function(callback, condition){
-				event.preventDefault();
-				condition = ( condition === undefined ) ? true : condition;
+			foundMatch: function(callback, extra){
+				
+				const event = extra.ev;
+				condition   = ( extra.cond === undefined ) ? true : extra.cond;
 
 				if ( typeof(condition) === 'array' ){
 					for (var cond of condition) {
@@ -30,9 +31,11 @@
 						}
 					}
 				}
-
+				
 				if ( !!condition ){
-					callback();
+					event.preventDefault();
+					event.stopPropagation();
+					callback();					
 				}
 			},
 			
@@ -42,7 +45,7 @@
 					//Modifiers
 					"shift": 16, "ctrl": 17, "alt": 18, 'esc': 27,
 					//Digits
-					"1"    : 49, "2": 50, "3": 51, "4": 52, "5": 53, "6": 54, "7": 55, "8": 56, "9": 57, "0": 48,
+					"1" : 49, "2": 50, "3": 51, "4": 52, "5": 53, "6": 54, "7": 55, "8": 56, "9": 57, "0": 48,
 					//Letters
 					"a"    : 65, "b": 66, "c": 67, "d": 68, "e": 69,
 					"f"    : 70, "g": 71, "h": 72, "i": 73, "j": 74,

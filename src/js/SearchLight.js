@@ -58,7 +58,7 @@
                 var flattenBookmarks = this.flattenBookmarks.bind(this);
                 var books = new Promise(function(res, rej){
 
-                    chrome.runtime.sendMessage({
+                    browser.runtime.sendMessage({
                         type: type
                     },
                     function(response){
