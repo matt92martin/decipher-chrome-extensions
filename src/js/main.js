@@ -12,8 +12,6 @@ $(function(){
         }
 
         var kb  = KeyBinds;
-        var sl  = SearchLight;
-        sl.init();
 
         if ( onPage && afm.GM_getValue( "question" ) ){
             afm.gotoPage();
@@ -32,22 +30,8 @@ $(function(){
         function escape() {
             if ( onQuota ) {
                 qb.cancel()
-
-            } else if ( onPage ){
-                sl.cancel();
-                afm.clearValues();
-
-            } else{
-                sl.cancel();
-
             }
         }
-
-        browser.runtime.onMessage.addListener( function( msg ) {
-            if ( msg.type === 'search_light' ){
-                sl.showInput();
-            }
-        });
 
 
         function keyFunctions(e) {
