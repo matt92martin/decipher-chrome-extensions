@@ -3,9 +3,11 @@ var defaultSite = 'v2.decipherinc.com';
 browser.runtime.onMessage.addListener(function(msg, sender, handler) {
     
     if (msg.type === 'bookmarks'){
+        
+        var getTree = browser.bookmarks.getTree();
 
-        browser.bookmarks.getTree(function(bookmarks_tree){
-            handler({ folders: bookmarks_tree })
+        getTree.then(function(bookmarks_tree){
+            handler({ folders: bookmarks_tree });
         });
 
     } else if ( msg.type === 'sites' ){

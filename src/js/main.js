@@ -1,4 +1,5 @@
-$( function(){
+(function($){
+$(function(){
 
     function page( onPage, options ){
 
@@ -137,5 +138,6 @@ $( function(){
     function( response ){
         page( validSite( response.payload.sites ) );
     });
-
+    
 });
+})(jQuery);
