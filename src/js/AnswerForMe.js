@@ -27,6 +27,7 @@
                 this.GM_deleteValue("qlabel");
                 this.GM_deleteValue("dupecount");
                 this.GM_deleteValue("time");
+                return;
             },
 
             AutoMate: function(){
@@ -54,15 +55,13 @@
 
                 //quit if timed out
                 if (!time || ((n - time) > this.timeout)){
-                    this.clearValues();
-                    return;
+                    return this.clearValues();
                 }
 
                 //quit if no question set to go to
                 var value = '';
                 if (!this.GM_getValue("question")){
-                    this.clearValues();
-                    return;
+                    return this.clearValues();
                 }
                 else{
                     value = this.GM_getValue("question");
@@ -98,8 +97,7 @@
 
                 //if at page then stop
                 if ($("dt a:contains('["+value+"]')").length){
-                    this.clearValues();
-                    return;
+                    return this.clearValues();
                 }
 
                 this.fillNext();
@@ -123,22 +121,21 @@
 
             fillPage: function(){
                 // Only fill dev questions if there is a term
-                if ($(".devContainer:has(div.surveyQuestion, div.question)").length){
-                    // todo: check if selection is a term before finding something new
-                    if ($(".even, .odd").has("span:contains('TERM')").length){
+                if ( $('.devContainer:has(div.surveyQuestion, div.question)').length ){
+                    
+                    if ( $('input:radio:checked').closest('.even, .odd').has("span:contains('TERM')").length ){
                         this.fillRadio();
                     }
-                    $('input:submit').click();
                     return;
                 }
 
-                var atmost = this.getQACode("ATM");
-                var atleast = this.getQACode("ATL");
-                var maxranks = this.getQACode("MRA");
-                var range = this.getQACode("VRF");
-                var amount = this.getQACode("AMT");
-                var unique =  this.getQACode("UNI");
-                var exactly =  this.getQACode("EX");
+                var atmost = this.getQACode('ATM');
+                var atleast = this.getQACode('ATL');
+                var maxranks = this.getQACode('MRA');
+                var range = this.getQACode('VRF');
+                var amount = this.getQACode('AMT');
+                var unique =  this.getQACode('UNI');
+                var exactly =  this.getQACode('EX');
                 var zipcode = (range === 'zipcode') ? true : false;
 
                 if ( !zipcode ){
@@ -208,8 +205,8 @@
 
 
             fillNumber: function(amount,range){
-                var _that = this;
-                if (amount){
+                var that = this;
+                if ( amount ){
 
                     var amountleft = amount;
                     var numbers = $('.number tr:has(input:text), .number tr:has(input[type="tel"])');
@@ -219,31 +216,38 @@
                     var count = numbers.length;
                     var newamount = Math.floor(amount/count);
                     var lastamount = newamount + (amount - (newamount*count));
+                    var num_el;
 
+                    if ( $(".groupingRows").length ){
 
-                    // TODO: This is always false....What was I doing
-                    if (false && ! $(".groupingRows").length){
-
-                        newamount = Math.floor(amount/count);
-                        lastamount = newamount + (amount - (newamount*count));
                         numbers.each(function(){
+
+                            num_el = $(this).find('.element input:text, .element input[type="tel"]');
+
+                            count = num_el.length;
+                            newamount = Math.floor(amount/count);
+                            lastamount = newamount + (amount - (newamount*count));
+                            
                             for (var i=0;i<count;i++){
-                                $(this).find('.element input:text, .element input[type="tel"]').eq(i).val(lastamount).trigger('change');
+
                                 if (i==count-1){
-                                    $(this).find('.element input:text, .element input[type="tel"]').eq(i).val(lastamount).trigger('change');
+                                    num_el.eq(i).val(lastamount).trigger('change');
                                 } else{
-                                    $(this).find('.element input:text, .element input[type="tel"]').eq(i).val(newamount).trigger('change');
+                                    num_el.eq(i).val(newamount).trigger('change');
                                 }
 
                             }
                         });
                     }
                     else{
-                        count = numbers.length;
+
                         newamount = Math.floor(amount/count);
                         lastamount = newamount + (amount - (newamount*count));
+
                         for (var i=0;i<count;i++){
-                            numbers.eq(i).find('.row-legend input:text, .row-legend input[type="tel"]').val(lastamount).trigger('change');
+
+                                numbers.eq(i).find('.row-legend input:text, .row-legend input[type="tel"]').val(lastamount).trigger('change');
+
                             if (i==count-1){
                                 numbers.eq(i).find('.element input:text, .element input[type="tel"]').val(lastamount).trigger('change');
                             }
@@ -265,7 +269,7 @@
                             numbers.val('33').trigger('change');
                         } else {
                             numbers.each(function() {
-                                $(this).val(_that.getRandomInt(range[0],range[1])).trigger('change');
+                                $(this).val( that.getRandomInt(range[0],range[1]) ).trigger('change');
                             });
                         }
                         return true;
@@ -274,7 +278,6 @@
 
             },
 
-            // todo: test float
             fillFloat: function(){
                 var float = $(".float input:text");
 
@@ -283,8 +286,6 @@
                 }
                 float.val(10).trigger('change');
             },
-
-
 
             getRandomInt: function(min, max) {
                 return Math.floor(Math.random() * (max - min + 1) + min);

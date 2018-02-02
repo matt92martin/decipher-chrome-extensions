@@ -1,14 +1,18 @@
 *{
     box-sizing: border-box;
 }
+body{
+    width: 800px;
+}
 .container{
-    width: 860px;
-    margin: 0 auto;
+    display: block;
+    width: 800px;
+    margin: 40px auto;
 }
 
 .form-container{
     width: 50%;
-    margin: 45px auto;
+    margin: 0 auto;
 }
 form{
     width: 100%;

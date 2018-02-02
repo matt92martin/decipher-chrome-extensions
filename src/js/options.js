@@ -1,5 +1,7 @@
 var defaultSite = 'v2.decipherinc.com';
 
+var browser = browser || chrome;
+
 function save_options() {
   var sites = document.getElementById('sites').value.split(/\s+|\n+|[,]+/);
   if ( sites.indexOf( defaultSite ) == -1 ){

@@ -1,14 +1,24 @@
 (function($){
 $(function(){
 
+    var browser = browser || chrome;    
+
     function page( onPage, options ){
 
         var onQuota  = ( window.location.href.indexOf('tab=quota') !== -1 );
         var onSurvey = ( !!$('body.survey-page').length );
+        var onExcept = ( !!$('div.exceptions').length );
 
         if ( onPage )   {
             var afm = AnswerForMe;
             var sc  = ShortCuts;
+        }
+        if ( onExcept ){
+            setTimeout(function(){
+                var windowHeight = $(window).height();
+                var exception    = $('.exceptions').find('.row.result .col-md-12 pre');
+                exception.css('height', windowHeight - exception.offset().top - 10);
+            }, 20)
         }
 
         var kb  = KeyBinds;
@@ -25,7 +35,6 @@ $(function(){
             qb.init();
 
         }
-
 
         function escape() {
             if ( onQuota ) {

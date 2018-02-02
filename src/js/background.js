@@ -1,40 +1,38 @@
 var defaultSite = 'v2.decipherinc.com';
 
+var browser = browser || chrome;
+
 browser.runtime.onMessage.addListener(function(msg, sender, handler) {
     
     if (msg.type === 'bookmarks'){
         
-        var getTree = browser.bookmarks.getTree();
-
-        getTree.then(function(bookmarks_tree){
+        var getTree = browser.bookmarks.getTree((bookmarks_tree) => {
             handler({ folders: bookmarks_tree });
         });
 
     } else if ( msg.type === 'sites' ){
 
-        let getSites = browser.storage.sync.get({
+        browser.storage.sync.get({
             sites: [defaultSite]
-        }); 
-
-        getSites.then( function( items ) {
-
+        },
+        ( items ) => {
             if ( items.sites.indexOf( defaultSite ) == -1 ){
                 items.sites.push( defaultSite );
             }
 
             handler( { type: 'sites', payload: items } );  
-        });
+        }); 
         
     }
     return true;
 });
 
 
-browser.commands.onCommand.addListener( function( command ){
+// browser.commands.onCommand.addListener( function( command ){
 
-    browser.tabs.query({ active: true, currentWindow: true }, function( tabs ){
-        browser.tabs.sendMessage( tabs[0].id, { type: command }, function( response ) { });  
-    });
+//     browser.tabs.query({ active: true, currentWindow: true }, function( tabs ){
+//         browser.tabs.sendMessage( tabs[0].id, { type: command }, function( response ) { });  
+//     });
     
-});
+// });
 

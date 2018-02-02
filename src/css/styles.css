@@ -184,3 +184,16 @@
 #sl-list-container div.selected{
 	background-color: #9fc5c6;
 }
+
+
+/******************* Exceptions Page ******************************/
+/* .exceptions .row.result{
+	position: relative;
+	height: 400px;
+}
+.exceptions .row.result .col-md-12{
+	height: 100%;
+}
+.exceptions .row.result .col-md-12 .ng-binding{
+	height: 100%;
+} */

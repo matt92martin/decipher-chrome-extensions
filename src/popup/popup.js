@@ -3,6 +3,8 @@
 
     $(function(){
 
+        var browser = browser || chrome;
+                
         let cached_bookmarks = [];
         const bookmark_search = $('.bookmark-search');
         const bookmark_list = $('.bookmark-list');
@@ -37,7 +39,7 @@
                 div = $('<div/>', { 
                     'class': "book-wrap",
                 })
-                .data({ 'url': book.url })
+                .data(book)
                 .text(book.title);
 
                 bookmark_list.append(div);
@@ -53,11 +55,7 @@
 
                 for (let book of bookmarks){
                     if ( book.url && !/^(javascript:|place:|data:)/i.test(book.url) ){
-                        
-                        books.push({
-                            url: book.url,
-                            title: book.title
-                        });
+                        books.push(book);
 
                     }
 
@@ -97,9 +95,7 @@
 
         update_bookmark_list();
 
-        
-
-
+    
         function gotourl(){
             let that = $(this);
             browser.tabs.create({
@@ -126,8 +122,10 @@
 
         function list_action(e){
             if ( 38 === e.keyCode ){
+                e.preventDefault();
                 return e.type === 'keydown' ? move(-1) : null;
             } else if ( 40 === e.keyCode ) {
+                e.preventDefault();
                 return e.type === 'keydown' ? move(1) : null;
             } else if ( 13 === e.keyCode ){
                 gotourl.call( $('.book-wrap.selected') );
@@ -135,12 +133,44 @@
             list_bookmarks();
         }
 
+        function updateSingleBookmark(book){
+            console.log(book);
+
+            var formData = $('#update-bookmark-form').serializeArray().map((data) => {
+                var obj = {};
+                obj[data.name] = data.value;
+                return obj;
+            })
+            .reduce((data, obj) => {
+                return Object.assign(obj, data);
+            }, {});
+
+        }
+
+        function updateBookmark() {
+            
+        }
+
+        function mouse(e){
+            switch (e.which) {
+                case 3:
+                    updateSingleBookmark($(this).data());
+                    break;
+                default:
+                    // gotourl();
+                    break;
+            }
+        }
+
         bookmark_search.on('keydown keyup', list_action);
-        bookmark_list.on('click', '.book-wrap', gotourl);
+        bookmark_list.on('mousedown', '.book-wrap', mouse);
+        bookmark_list.contextmenu(() => { return false; });
 
         // Takes a bit for the popup to load even though the page says it loaded    
         setTimeout(() => {
             $(".bookmark-search").focus();
         }, 100);
+
     });
+
 })(jQuery);
