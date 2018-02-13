@@ -134,7 +134,6 @@
         }
 
         function updateSingleBookmark(book){
-            console.log(book);
 
             var formData = $('#update-bookmark-form').serializeArray().map((data) => {
                 var obj = {};
@@ -157,7 +156,7 @@
                     updateSingleBookmark($(this).data());
                     break;
                 default:
-                    // gotourl();
+                    gotourl.call($(this));
                     break;
             }
         }
