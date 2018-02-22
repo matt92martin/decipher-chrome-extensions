@@ -41,9 +41,10 @@ https://chrome.google.com/webstore/detail/focusvision-keyboard-shor/fkgbkflajagj
 This also adds a menu in the top left of quota pages to help navigate large quota sheets.
 
 ### Global Shortcuts(beta):
+
 <ul>
     <li>alt+shift+p = Enables bookmark search</li>
 </ul>
 <br/>
 Limitations:<br/>
-Currently limited to surveys with a decipherinc.com cname
+Currently limited to surveys with specified cnames in your exentension. 

@@ -8,6 +8,8 @@
         let cached_bookmarks = [];
         const bookmark_search = $('.bookmark-search');
         const bookmark_list = $('.bookmark-list');
+        const update_bookmark = $('#update-bookmark');
+        const update_bookmark_form = $('#update-bookmark-form');
 
 
         function filter(obj, search){
@@ -133,9 +135,23 @@
             list_bookmarks();
         }
 
-        function updateSingleBookmark(book){
 
-            var formData = $('#update-bookmark-form').serializeArray().map((data) => {
+        function clearForm(){
+            update_bookmark_form.find('input:text, input:hidden').val('');
+            update_bookmark.addClass('hide');
+        }
+
+        function loadBookmark(data){
+            update_bookmark.removeClass('hide');
+            update_bookmark_form.find('input:text, input:hidden').each(function() {
+                var that = $(this);
+                var value = data[that.attr('id')];
+                that.val(value);
+            });
+        }
+
+        function updateBookmark() {
+            var formData = update_bookmark_form.serializeArray().map((data) => {
                 var obj = {};
                 obj[data.name] = data.value;
                 return obj;
@@ -144,16 +160,26 @@
                 return Object.assign(obj, data);
             }, {});
 
-        }
 
-        function updateBookmark() {
+            var obj = {};
+            obj['title'] = formData.title;
+            obj['url']   = formData.url;
+            if ( obj['title'] != undefined || obj['url'] != undefined ){
+                browser.bookmarks.update(formData.id, obj, function(){
+                    clearForm();
+                    update_bookmark_list();
+                });
+            } else {
+                console.log(obj);
+            }
             
         }
+
 
         function mouse(e){
             switch (e.which) {
                 case 3:
-                    updateSingleBookmark($(this).data());
+                    loadBookmark($(this).data());
                     break;
                 default:
                     gotourl.call($(this));
@@ -164,6 +190,12 @@
         bookmark_search.on('keydown keyup', list_action);
         bookmark_list.on('mousedown', '.book-wrap', mouse);
         bookmark_list.contextmenu(() => { return false; });
+        update_bookmark.contextmenu(() => { return false; });
+        $('.btn').on('click', (e) => { e.preventDefault(); })
+        $('#cancel').on('click', clearForm);
+        $('#save').on('click', updateBookmark);
+
+
 
         // Takes a bit for the popup to load even though the page says it loaded    
         setTimeout(() => {

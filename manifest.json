@@ -3,7 +3,7 @@
 
     "name": "FocusVision Keyboard Shortcuts for Decipher",
     "description": "This extension provides keyboard shortcuts for navigating around surveys",
-    "version": "2.2.2",
+    "version": "2.2.3",
     "author": "matt92martin",
     "icons": {
         "128": "src/Deciphericon.png" 
@@ -44,5 +44,14 @@
     ],
     "options_ui": {
         "page": "src/options.html"
+    },
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+L",
+                "windows": "Ctrl+Shift+L",
+                "mac": "Command+Shift+L"
+            }
+        }
     }
 }
