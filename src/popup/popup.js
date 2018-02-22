@@ -11,6 +11,21 @@
         const update_bookmark = $('#update-bookmark');
         const update_bookmark_form = $('#update-bookmark-form');
 
+        function getSearch(){
+            browser.storage.local.get({'popup_search': ''}, (res) => {
+                var value = res['popup_search'];
+                if ( value != undefined ) {
+                    bookmark_search.val(value);
+                    bookmark_search.select();
+                }
+            });
+        }
+        getSearch();
+
+        function setSearch(){
+
+            browser.storage.local.set({'popup_search': bookmark_search.val()});
+        }
 
         function filter(obj, search){
             const book_title = obj.title.toLowerCase();
@@ -107,6 +122,15 @@
             window.close();
         }
 
+        function gotourlback(){
+            let that = $(this);
+            browser.tabs.create({
+                active: false,
+                url: that.data('url')
+            });
+            window.close();
+        }
+
         function move(direction){
             let books = bookmark_list.find('.book-wrap');
             let selected = $('.selected');
@@ -132,6 +156,7 @@
             } else if ( 13 === e.keyCode ){
                 gotourl.call( $('.book-wrap.selected') );
             }
+            setSearch();
             list_bookmarks();
         }
 
@@ -165,12 +190,10 @@
             obj['title'] = formData.title;
             obj['url']   = formData.url;
             if ( obj['title'] != undefined || obj['url'] != undefined ){
-                browser.bookmarks.update(formData.id, obj, function(){
+                browser.bookmarks.update(formData.id, obj, () => {
                     clearForm();
                     update_bookmark_list();
                 });
-            } else {
-                console.log(obj);
             }
             
         }
@@ -180,6 +203,9 @@
             switch (e.which) {
                 case 3:
                     loadBookmark($(this).data());
+                    break;
+                case 2:
+                    gotourlback.call($(this));
                     break;
                 default:
                     gotourl.call($(this));
