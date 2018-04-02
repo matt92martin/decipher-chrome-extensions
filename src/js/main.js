@@ -116,10 +116,14 @@ $(function(){
 
     function validSite( sites ){
         var current_site = window.location.host;
-        for ( var i=0; i<sites.length; i++ ){
-            var site = sites[i].trim();
+        var search;
 
-            if ( site && current_site === site ){
+        for ( var site of sites ){
+            site = site.trim();
+
+            search = new RegExp(site);
+            
+            if ( site && current_site.match(search) ){
                 return true;
             }
         }
