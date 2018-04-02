@@ -1,4 +1,4 @@
-var defaultSite = 'v2.decipherinc.com';
+var defaultSite = '.*?.decipherinc.com';
 
 var browser = browser || chrome;
 
