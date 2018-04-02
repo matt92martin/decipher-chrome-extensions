@@ -115,20 +115,22 @@
     
         function gotourl(){
             let that = $(this);
+            
             browser.tabs.create({
                 active: true,
                 url: that.data('url')
             });
+
             window.close();
         }
 
         function gotourlback(){
             let that = $(this);
+
             browser.tabs.create({
                 active: false,
                 url: that.data('url')
             });
-            window.close();
         }
 
         function move(direction){

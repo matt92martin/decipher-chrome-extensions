@@ -3,7 +3,7 @@
 
     "name": "FocusVision Keyboard Shortcuts for Decipher",
     "description": "This extension provides keyboard shortcuts for navigating around surveys",
-    "version": "2.2.4",
+    "version": "2.3.0",
     "author": "matt92martin",
     "icons": {
         "128": "src/Deciphericon.png" 
