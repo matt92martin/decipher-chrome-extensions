@@ -1,15 +1,19 @@
 var defaultSite = '.*?.decipherinc.com';
+var defaultSpecial = false;
 
 var browser = browser || chrome;
 
 function save_options() {
   var sites = document.getElementById('sites').value.split(/\s+|\n+|[,]+/);
+  var special = document.getElementById('special').checked;
+
   if ( sites.indexOf( defaultSite ) == -1 ){
     sites.push( defaultSite );
   }
 
   browser.storage.sync.set({
     sites: sites,
+    special: special,
   }, 
   function() {
     var status = document.getElementById('status');
@@ -18,6 +22,7 @@ function save_options() {
     setTimeout(function() {
       status.textContent = '';
     }, 750);
+
   });
 
 }
@@ -26,7 +31,8 @@ function save_options() {
 function restore_options(){
 
   browser.storage.sync.get({
-    sites: [ defaultSite ]
+    sites: [ defaultSite ],
+    special: defaultSpecial
   }, 
   function(items) {
 
@@ -35,6 +41,7 @@ function restore_options(){
     }
 
     document.getElementById('sites').value = items.sites.join('\n');
+    document.getElementById('special').checked = items.special;
   });
 }
 

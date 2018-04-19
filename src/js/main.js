@@ -4,8 +4,11 @@ $(function(){
     var browser = browser || chrome;    
 
     function page( onPage, options ){
-
+        console.log(options);
         var onQuota  = ( window.location.href.indexOf('tab=quota') !== -1 );
+        var onCamp  = ( window.location.href.indexOf('tab=email') !== -1 );
+        var onTerm  = ( window.location.href.indexOf('tab=terminate') !== -1 );
+        var onDrop  = ( window.location.href.indexOf('tab=dropout') !== -1 );
         var onSurvey = ( !!$('body.survey-page').length );
         var onExcept = ( !!$('div.exceptions').length );
 
@@ -16,12 +19,14 @@ $(function(){
         if ( onExcept ){
             setTimeout(function(){
                 var windowHeight = $(window).height();
-                var exception    = $('.exceptions').find('.row.result .col-md-12 pre');
+                var exception    = $('.exceptions').find('.row.result pre');
                 exception.css('height', windowHeight - exception.offset().top - 10);
-            }, 20)
+            }, 100)
         }
 
         var kb  = KeyBinds;
+
+        var body = $( 'body' );
 
         if ( onPage && afm.GM_getValue( "question" ) ){
             afm.gotoPage();
@@ -30,10 +35,14 @@ $(function(){
             $( '.surveyInfo, .survey-info' ).toggle();
 
         } else if ( onQuota ) {
-            $( 'body' ).addClass( 'quota-page' );
+            // Todo: add check for quota fix
+            body.addClass( 'quota-page' );
+            if ( options.special ) body.addClass( 'shortcut-page-fix' );
             var qb = QuotaBuddy;
             qb.init();
 
+        } else if ( ( onCamp || onTerm || onDrop ) && options.special ){
+            body.addClass( 'shortcut-page-fix' );
         }
 
         function escape() {
@@ -133,7 +142,7 @@ $(function(){
         type: 'sites'
     },
     function( response ){
-        page( validSite( response.payload.sites ) );
+        page( validSite( response.payload.sites ), {special: response.payload.special} );
     });
     
 });

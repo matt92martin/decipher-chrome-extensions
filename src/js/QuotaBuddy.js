@@ -1,8 +1,6 @@
 (function(window, $){
 	
 	function define_quotabuddy(){
-		// var that = this;
-		// that.opt = typeof( arguments[ 0 ] ) === "object" ? arguments[ 0 ] : {};
 		
 		var QuotaBuddy = {
 			
@@ -16,6 +14,24 @@
 				return window.location.host;
 			},
 			
+			gid: function(id){
+				return document.getElementById(id);
+			},
+			q: function(query){
+				return document.querySelector(query);
+			},
+
+			qa: function(query){
+				return document.querySelectorAll(query);
+			},
+
+			getClosest: function ( elem, selector ) {
+				for ( ; elem && elem !== document; elem = elem.parentNode ) {
+					if ( elem.matches( selector ) ) return elem;
+				}
+				return null;
+			
+			},
             
 			injectJs: function(srcFile) {
 				var src = document.createElement('script');
@@ -25,30 +41,21 @@
 			
             
 			gotoquota: function gotoquota(el) {
-				var eel  = $(el);
-				var eli  = eel.attr('class');
-				var elid = $('#' + eli);
-				var elgo = eel.data('goto');
-				
-				if ( elid.is(':visible') ) {
-					window.location.hash = '#' + elgo;
-				} else {
-					var _thisclick = elid.prev('h2').find('a').get(0);
-					_thisclick.click();
-					window.location.hash = '#' + elgo;
-				}
+				var goto     = el.getAttribute('data-goto');
+				var subtable = document.getElementById(goto);
+				var sheet    = this.getClosest(subtable, '.quota-sheet');
+				var status   = sheet.querySelector('.quota-sheet-toggle.off');
+				if ( status ) status.click();
+				console.log(sheet);
+
+				window.location.hash = '#' + goto;
 			},
             
 			
-			HideShowAll: function(type) {
-				var allDivs = $('div[id^="div"]');
-				allDivs.each(function () {
-					var _thisDiv = $(this);
-					if (_thisDiv.is(type)) {
-						var thisclick = _thisDiv.prev('h2').find('a').get(0);
-						thisclick.click();
-					}
-				});
+			hideShowAll: function(type) {
+				for ( var ct of this.qa( '.quota-sheet .sheet-header a.'+type ) ){
+					ct.click();
+				}
 			},
 			
             
@@ -57,14 +64,14 @@
 				var searchTRs = $('#qbTable').find('table tr');
                 
 				searchTRs.each(function () {
-					var _this    = $(this);
-					var _thisVal = _this.find('a').text().toLowerCase();
+					var self    = $(this);
+					var selfVal = self.find('a').text().toLowerCase();
                     
-					if (_thisVal.indexOf(searchVal) > -1 || _this.hasClass('quotaTogglersHead') ) {
-						_this.show();
+					if ( selfVal.indexOf( searchVal ) > -1 || self.hasClass( 'quotaTogglersHead' ) ) {
+						self.show();
 					} 
                     else {
-						_this.hide();
+						self.hide();
 					}
 				});
 			},
@@ -79,11 +86,25 @@
 			edit: function() {
 				$("#editQuotas").click();
 			},
-            
+            addTo: function(el, str, c){
+
+				var div = document.createElement(eltype);
+				div.innerHTML = str;
+				div.classList.add(c);
+
+				while (div.children.length > 0) {
+				  el.appendChild(div.children[0]);
+				}
+			},
+			addRow: function(table, rowtext, c){
+				var newRow = table.insertRow(table.rows.length);
+				if (c) newRow.classList.add(c);
+				newRow.innerHTML = rowtext;
+			},
             
             init: function(){
                 
-                var _this = this;
+                var self = this;
 				
                 var quotaBuddyHtml = `
                 <div id="quotaBuddy" class="qbhide">
@@ -108,41 +129,45 @@
 					$('#qbtoggle').toggleClass('qbhide');
 				});
 				
-				$('#hideAll').on('click', _this.HideShowAll.bind(_this, ':visible'));
-				$('#showAll').on('click', _this.HideShowAll.bind(_this, ':hidden'));
-				this.injectJs(_this.gotoquota);
+				this.gid('hideAll').addEventListener('click', self.hideShowAll.bind(this, 'on'));
+				this.gid('showAll').addEventListener('click', self.hideShowAll.bind(this, 'off'));
+				// this.injectJs(this.gotoquota);
 				
-				var qBuddy = $('div#quotaBuddy'),
-                qBuddyTdiv = $('#qbTable'),
-                qBuddyT    = qBuddyTdiv.find('table'),
-                qTables    = $('table.nquota');	
+                var qBuddyT = this.q('#qbTable table'),
+				qSheets     = this.qa('.quota-sheet');
 				
-				
-				var quotaSheets = [];
-				qTables.each(function () {
-					var $this       = $(this);
-					var _thisid     = $this.get(0).id;
-					var _thisSheet  = $this.parent('div').prev().find('span').text();
-					var _thisHidDiv = $this.parent('div').get(0).id;
-					var _thisText   = $this.find('.nquotaDescription').text();
-					
-					var rowtext = `
-						<tr>
-							<td class="quotaTogglers">
-								<a  href="javascript:void(0)" class="${_thisHidDiv}" data-goto="${_thisid}" onclick="gotoquota(this)">${_thisText}</a>
-							</td>
-						</tr>`;
-                    
-					if (quotaSheets.indexOf(_thisSheet) == -1) {
-						var sheetText = `<tr class="quotaTogglersHead"><td><h5>${_thisSheet.replace(/^sheet: /, '')}</h5></td></tr>`;
-						quotaSheets.push(_thisSheet);
-						rowtext = sheetText + rowtext;
+				for ( var sheet of qSheets ){
+					var sheetName = sheet.querySelector('.sheet-name strong').innerText;
+					this.addRow(qBuddyT, `<td>${sheetName}</td>`, "row-legend");
+
+					var tables = sheet.querySelectorAll('table.table');
+
+					for ( var table of tables ) {
+						var subtables = table.querySelectorAll('.nquota-description');
+						var rowtext = "";
+
+						for ( var st of subtables ){
+							rowtext = `
+								<td class="quotaTogglers">
+									<a  href="javascript:void(0)" class="goto ${table.id}" data-goto="${table.id}">${st.innerText}</a>
+								</td>`;
+							
+							this.addRow(qBuddyT, rowtext);
+						}
+
 					}
-					qBuddyT.append(rowtext);
-				});
+				}
+				
+				qBuddyT.addEventListener('click', function(e){
+					var classes = e.target.className.split(/\s+/);
+					if ( classes.indexOf('goto') !== -1 ){
+						return this.gotoquota(event.target);
+					}
+					return false;
+				}.bind(this));
 				
 				var qbSearch = $('#qbSearch').find('input');
-				qbSearch.on('keyup', _this.searchQuotas);
+				qbSearch.on('keyup', self.searchQuotas);
                 
                 
                 var editor = $("#_editor");
@@ -156,7 +181,7 @@
 						var nextindex = e.shiftKey ? curindex - 1 : curindex + 1;
 
 						var nextItem = $('[tabindex=' + nextindex + ']');
-						_this.highlight(nextItem);
+						self.highlight(nextItem);
 						nextItem.click();
 						e.preventDefault();
 					}
@@ -169,7 +194,7 @@
                 });
                 
                 $("tbody td.editable").on('click', function(){
-                    _this.highlight($(this));
+                    self.highlight($(this));
                 });
             },
 

@@ -74,6 +74,7 @@
 	border: none;
 	font-weight: bold;
 	font-size: 16px;
+	border-radius: 0;
 }
 .qbred{background-color: #db3236;}
 .qbgrey{background-color: #898989;}
@@ -108,6 +109,36 @@
 /*****************END QB*******************/
 
 
+/*****************START QUOTA FIXES*******************/
+.shortcut-page-fix #canEditQuota{
+	margin: 0px !important;
+}
+.shortcut-page-fix .quota-sheet {
+	margin: 0px !important;
+	padding: 10px !important;
+}
+.shortcut-page-fix .quota-sheet .mb-5{
+	display: none;	
+}
+.shortcut-page-fix .table.table-single-line thead{
+	background-color: #16263b;
+}
+.shortcut-page-fix .table thead tr>th{
+	color: #FFFFFF;
+}
+.shortcut-page-fix .table.table-single-line tbody tr:hover{
+	background-color: rgba(0,0,0,0.075);
+}
+.shortcut-page-fix .table thead tr th{
+	border: 1px solid #16263b;
+}
+.shortcut-page-fix .table tbody tr td{
+	box-shadow: none !important;
+	border: 1px solid #e9e9e9 !important;
+}
+
+
+/*****************END QUOTA FIXES*******************/
 
 
 
