@@ -4,13 +4,13 @@ $(function(){
     var browser = browser || chrome;    
 
     function page( onPage, options ){
-        console.log(options);
         var onQuota  = ( window.location.href.indexOf('tab=quota') !== -1 );
         var onCamp  = ( window.location.href.indexOf('tab=email') !== -1 );
         var onTerm  = ( window.location.href.indexOf('tab=terminate') !== -1 );
         var onDrop  = ( window.location.href.indexOf('tab=dropout') !== -1 );
         var onSurvey = ( !!$('body.survey-page').length );
         var onExcept = ( !!$('div.exceptions').length );
+        var onPortal = ( window.location.href.indexOf('apps/portal/#/projects/detail') !== -1 );
 
         if ( onPage )   {
             var afm = AnswerForMe;
@@ -22,6 +22,9 @@ $(function(){
                 var exception    = $('.exceptions').find('.row.result pre');
                 exception.css('height', windowHeight - exception.offset().top - 10);
             }, 100)
+        }
+        if ( onPortal && options.showModal ){
+            document.querySelector('.title-row').classList.add('always-display');
         }
 
         var kb  = KeyBinds;
@@ -142,7 +145,10 @@ $(function(){
         type: 'sites'
     },
     function( response ){
-        page( validSite( response.payload.sites ), {special: response.payload.special} );
+        page( validSite( response.payload.sites ), { 
+            special: response.payload.special, 
+            showModal: response.payload.showModal 
+        } );
     });
     
 });

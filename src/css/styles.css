@@ -228,3 +228,9 @@
 .exceptions .row.result .col-md-12 .ng-binding{
 	height: 100%;
 } */
+
+
+
+.always-display{
+	display: block !important;
+}

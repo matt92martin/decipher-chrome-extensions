@@ -1,5 +1,4 @@
 var defaultSite = '.*?.decipherinc.com';
-var defaultSpecial = false;
 
 var browser = browser || chrome;
 
@@ -15,7 +14,8 @@ browser.runtime.onMessage.addListener(function(msg, sender, handler) {
 
         browser.storage.sync.get({
             sites: [defaultSite],
-            special: defaultSpecial
+            special: true,
+            showModal: false
         },
         ( items ) => {
             if ( items.sites.indexOf( defaultSite ) == -1 ){
